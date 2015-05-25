@@ -1,0 +1,172 @@
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/dksq.css">
+<style>
+	table{
+		border-collapse:collapse;
+		width: 1000px;
+		margin: auto;
+		text-align: center;
+	}
+	table th,table td{
+		border: 1px solid #ccc;
+	}
+	textarea{
+		resize:none;
+	}
+</style>
+<div id="chakan_header">
+	<a href="{:U('Dksq/index')}"><img height="50px" src="__PUBLIC__/img/logo1.jpg" /></a>
+</div>
+		<table>
+		    <caption>员工详细信息</caption>
+		    <!-- <tr>
+		        <th>姓名:</th>
+		        <th>性别</th>
+		        <th>民族</th>
+		        <th>籍贯</th>
+		    	<th>出生日期</th>
+		    	<th>文化程度</th>
+		    </tr> -->
+		    <tr>
+		        <td>姓名：{$UserInfo[0]['xingming']}</td>
+		        <td>
+		        	性别：<if condition="$is_exits[0]['sex'] eq 1">
+		        	男
+					<elseif condition="$is_exits[0]['sex'] eq 2"/>
+					女
+		        	</if>
+		        </td>
+		        <td>民族：{$is_exits[0]['nation']}</td>
+		        <td>籍贯：{$is_exits[0]['birth_place']}</td>
+		    	<td>出生日期：{$is_exits[0]['birth']|date="Y-m-d",###}</td>
+		    	<td>文化程度：{$is_exits[0]['edu_level']}</td>
+		    </tr>
+		    
+		    
+		   <!--  <tr>
+		    	<th>婚姻状况</th>
+		    	<th>健康状况</th>
+		    	<th>政治面貌</th>
+		    	<th>家庭号码</th>
+		    	<th>手机号码</th>
+		    	<th>身份证号</th>
+		    </tr> -->
+		    <tr>
+		    	<td>婚姻状况：{$is_exits[0]['is_marriage']}</td>
+		    	<td>健康状况：{$is_exits[0]['health_status']}</td>
+		    	<td>政治面貌：{$is_exits[0]['political_status']}</td>
+		    	<td>家庭号码：{$is_exits[0]['h_tel']}</td>
+		    	<td>手机号码：{$is_exits[0]['phone']}</td>
+		    	<td>身份证号：{$UserInfo[0]['sfid']}</td>
+		    </tr>
+		    <!-- <tr>
+		    	<th colspan="6"  class="am-primary">居住地址</th>
+		    </tr>  -->
+		    <tr> 
+		    	<td colspan="6">居住地址：{$is_exits[0]['addr']}</td>
+		    </tr>
+		   <!--  <tr>
+		    	<th>紧急联络人</th>
+		    	<th>与本人关系</th>
+		    	<th>联络人电话</th>
+		    	<th>部门</th>
+		    	<th>职位</th>
+		    	<th>薪金</th>
+		    </tr> -->
+		    <tr>
+		    	<td>紧急联络人：{$is_exits[0]['emer_contact_pers']}</td>
+		    	<td>与本人关系：{$is_exits[0]['relationship']}</td>
+		    	<td>联络人电话：{$is_exits[0]['emer_contact_phone']}</td>
+		    	<td>
+		    	部门：
+		    	<if  condition="$UserInfo[0]['bumeng'] eq 1 ">总经办
+					<elseif  condition="$UserInfo[0]['bumeng'] eq 2 "/>风控部
+					<elseif  condition="$UserInfo[0]['bumeng'] eq 3 "/>财务部
+					<elseif  condition="$UserInfo[0]['bumeng'] eq 4 "/>技术部
+					<elseif  condition="$UserInfo[0]['bumeng'] eq 5 "/>市场部
+					<elseif  condition="$UserInfo[0]['bumeng'] eq 6 "/>客服部
+					</if>
+		    	</td>
+		    	<td>职位：{$is_exits[0]['position']}</td>
+		    	<td>薪金：{$is_exits[0]['salery']}</td>
+		    </tr>
+		   <!--  <tr>
+		    	<th>爱好</th>
+		    	<th>特长</th>
+		    	<th>愿望</th>
+		    	<th>职业期望</th>
+		    	<th>户籍地址</th>
+		    	<th>入职时间</th>
+		    </tr> -->
+		    <tr>
+		    	<td>爱好：{$is_exits[0]['hobby']}</td>
+		    	<td>特长：{$is_exits[0]['speciality']}</td>
+		    	<td>愿望：{$is_exits[0]['wish']}</td>
+		    	<td>职业期望：{$is_exits[0]['career_wish']}</td>
+		    	<td>户籍地址：{$is_exits[0]['birth_place_addr']}</td>
+		    	<td>入职时间：{$UserInfo[0]['rzdate']|date="Y-m-d",###}</td>
+		    </tr>
+		    <!-- <tr>
+		    	<th colspan="6">自我评价</th>
+		    </tr> -->
+		    <tr>
+		    	<td colspan="6">自我评价：{$is_exits[0]['self_assi']}</td>
+		    </tr>
+		    <!-- <tr>
+		    	<th colspan="6">个人学习</th>
+		    </tr> -->
+		    <tr>
+		    	<td colspan="6" >个人学习：<textarea readonly="readonly" cols="150" rows="5">{$is_exits[0]['grxx']}</textarea></td>
+		    </tr>
+		    <!-- <tr>
+		    	<th colspan="6">工作经历</th>
+		    </tr> -->
+		    <tr>
+		    	<td colspan="6">工作经历：<textarea readonly="readonly" cols="150" rows="5">{$is_exits[0]['his_work']}</textarea></td>
+		    </tr>
+		    <!-- <tr>
+		    	<th colspan="6">备注</th>
+		    </tr> -->
+		    <tr>
+		    	<td colspan="6">备注：{$is_exits[0]['remark']}</td>
+		    </tr>
+		</table>
+
+
+		<!-- <div class="am-form-group">
+			姓名：
+			<input type="text" name="xingming" readonly="readonly" value="{$UserInfo[0]['xingming']}" class="js-pattern-zhongwen" required minlength="2" maxlength="5" />
+		</div>
+		<div class="am-form-group">
+			身份证号：
+			<input type="text" name="sfid" readonly="readonly" value="{$UserInfo[0]['sfid']}" class="js-pattern-idcard" required placeholder="必填" />
+		</div>
+		<div class="am-form-group">
+		部　　门：<select name="bumeng">
+					<option value="05" <if condition="$list.bumeng eq 5">selected="selected"</if>>市场部</option>
+					<option value="01" <if condition="$list.bumeng eq 1">selected="selected"</if>>总经办</option>
+					<option value="02" <if condition="$list.bumeng eq 2">selected="selected"</if>>风控部</option>
+					<option value="03" <if condition="$list.bumeng eq 3">selected="selected"</if>>财务部</option>
+					<option value="04" <if condition="$list.bumeng eq 4">selected="selected"</if>>技术部</option>
+					<option value="06" <if condition="$list.bumeng eq 6">selected="selected"</if>>客服部</option>
+				</select>
+		</div>		
+		<div class="am-form-group">
+		在职状态：<select name="status">
+					<option value="2" <if condition="$list.status eq 2">selected="selected"</if>>试用期</option>
+					<option value="0" <if condition="$list.status eq 0">selected="selected"</if>>在职</option>
+					<option value="1" <if condition="$list.status eq 1">selected="selected"</if>>离职</option>
+				</select>
+		</div>		
+		入职日期： 
+		<div class="am-form-group am-form-icon">
+			<i class="am-icon-calendar"></i>
+			<input name="rzdate" type="text" class="am-form-field" value="<if condition="$list.rzdate neq 0">{$list.rzdate|date="Y-m-d",###}</if>" data-am-datepicker />
+		</div>
+		离职日期：
+		<div class="am-form-group am-form-icon">
+			<i class="am-icon-calendar"></i>
+			<input name="lzdate" type="text" class="am-form-field" value="<if condition="$list.lzdate neq 0">{$list.lzdate|date="Y-m-d",###}</if>" data-am-datepicker />
+		</div>
+		<input type="hidden" name="id" value="{$list.id}" />
+		<input type="submit" value="<if condition="$list.id eq null">添加<else />修改</if>" class="am-btn am-btn-secondary"/> -->
+	

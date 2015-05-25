@@ -1,0 +1,179 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
+<script>
+    $(function(){
+        $SendUrl="{:U('User/MessageSend','','')}";
+        
+    });
+</script>
+<div class="admin-content">
+    <ol class="am-breadcrumb">
+        <li><a href="{:U('User/MessageManage','','')}">管理</a></li>
+        <li class="am-active">列表</li>
+    </ol>
+    
+
+<div class="am-tabs" data-am-tabs>
+    <ul class="am-tabs-nav am-nav am-nav-tabs">
+        <li class="am-active"><a href="#tab1">单发</a></li>
+        <li><a href="#tab2">群发</a></li>
+        <!-- <li><a href="#tab3">流浪</a></li> -->
+    </ul>
+
+    <div class="am-tabs-bd">
+        <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+            <form action="javascript:;" method="post" accept-charset="utf-8" class="am-form" data-am-validator>
+            <fieldset>
+                <legend>发送站内信</legend>
+                
+                <div class="am-form-group">
+                <label>标题：</label>
+                    <input type="text" name="title" maxlength="20" required/>
+                </div>
+
+                <div class="am-form-group">
+                <label>收件人：</label>
+                <select name="getid" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                    <option value="0">请选择</option>
+                    <optgroup label="总经办">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 01">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="风控部">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 02">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="财务部">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 03">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="技术部">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 04">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="市场部">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 05">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="客服部">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 06">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="管理员">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="empty($vo['bumeng'])">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                </select>
+                </div>
+
+                <div class="am-form-group">
+                <label>内容：</label>
+                    <textarea name="content" style="resize: none;" rows="10" required></textarea>
+                </div>
+                <button class="am-btn am-btn-secondary am-btn-success am-radius SendMessage" type="submit">发送</button>
+            </fieldset>
+            </form>
+        </div>
+        <div class="am-tab-panel am-fade" id="tab2">
+            <form action="javascript:;" method="post" accept-charset="utf-8" class="am-form" data-am-validator>
+            <fieldset>
+                <legend>群发站内信</legend>
+                
+                <div class="am-form-group">
+                <label>标题：</label>
+                    <input type="text" name="titles" maxlength="20" required/>
+                </div>
+
+                <div class="am-form-group">
+                <label>收件人：</label>
+                <select multiple  name="getids" data-am-selected="{maxHeight: 200}">
+                    <optgroup label="总经办">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 01">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="风控部">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 02">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="财务部">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 03">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="技术部">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 04">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="市场部">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 05">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="客服部">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="$vo['bumeng'] eq 06">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                    <optgroup label="管理员">
+                        <volist name="UserInfo" id='vo'>
+                            <if condition="empty($vo['bumeng'])">
+                                <option value="{$vo.id}">{$vo.xingming}</option>
+                            </if>
+                        </volist>
+                    </optgroup>
+                </select>
+                </div>
+
+                <div class="am-form-group">
+                <label>内容：</label>
+                    <textarea name="contents" style="resize: none;" rows="10" required></textarea>
+                </div>
+                <button class="am-btn am-btn-secondary am-btn-success am-radius SendMessages" type="submit">发送</button>
+            </fieldset>
+            </form>
+        </div>
+
+        <!-- <div class="am-tab-panel am-fade" id="tab3">
+
+        </div> -->
+    </div>
+</div>
+</div>
+<include file="./Application/Home/View/footer.html" />

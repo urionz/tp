@@ -1,0 +1,81 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<style type="text/css">
+	table *{
+		font-size: 10px;
+		padding: 0px;
+		text-align: center;
+	}
+</style>
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="{:U('Fhk/AlreadyList','','')}">已收清单</a></li>
+		<li class="am-active">列表</li>
+		<li><a href="{:U('Fhk/AlreadyList','','')}/action/export">导出</a></li>
+	</ol>
+	<div class="am-form-group">
+    
+    <form action="{:U('Fhk/AlreadyList')}" method="post">
+    <label>开始日期</label>
+    	<input name="starttime" type="text" data-am-datepicker="{format: 'yyyy-mm-dd'}" />
+     <label>截止日期</label>
+    	<input name="endtime" type="text" data-am-datepicker="{format: 'yyyy-mm-dd'}" />
+    	<input type="submit" placeholder="格式例:2014-01-01" value="查询"/>
+    </form>
+    
+    </div>
+
+	<table class="am-table am-table-striped am-table-bordered am-text-sm am-table-hover" >
+		<tr class="am-success">
+			<th>合同号</th>
+			<th>客户名称</th>
+			<th>结算金额</th>
+			<th>实际还本</th>
+			<th>实际还息</th>
+			<th>合同还本</th>
+			<th>合同还息</th>
+			<th>坏账本金</th>
+			<th>坏账利息</th>
+			<th>提前去息</th>
+			<th>违约金</th>
+			<th>逾期罚息</th>
+			<th>收款均时</th>
+		</tr>
+		<volist name="out" id="vo">
+			<tr>
+				<td><a href="{:U('Fhk/scan','','')}/id/{$vo.agree_num}">{$vo['agree_num']}</a></td>
+				<td>{$vo['cname']}</td>
+				<td>{:number_format($vo['ResultMoney'],2,'.',',')}</td>
+				<td>{:number_format($vo['FacHb'],2,'.',',')}</td>
+				<td>{:number_format($vo['FacHx'],2,'.',',')}</td>
+				<td>{:number_format($vo['AgreeHb'],2,'.',',')}</td>
+				<td>{:number_format($vo['AgreeHx'],2,'.',',')}</td>
+				<td>{:number_format($vo['HzBj'],2,'.',',')}</td>
+				<td>{:number_format($vo['HzLx'],2,'.',',')}</td>
+				<td>{:number_format($vo['Tqqx'],2,'.',',')}</td>
+				<td>{:number_format($vo['Wyj'],2,'.',',')}</td>
+				<td>{:number_format($vo['Fx'],2,'.',',')}</td>
+				<td>{:floor($vo['Ysjs'])}</td>
+			</tr>
+		</volist>
+		<if condition="$Sum['CCount'] neq 0">
+			<tr>
+				<td>统计：{$Sum['CCount']}</td>
+				<td>--</td>
+				<td>{:number_format($Sum['ResultMoneySum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['FacHbSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['FacHxSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['AgreeHbSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['AgreeHxSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['HzBjSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['HzLxSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['TqqxSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['WyjSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['FxSum'],2,'.',',')}</td>
+				<td>--</td>
+			</tr>
+		</if>
+	</table>
+	<div class="fengye">{$page}</div>
+</div>
+<include file="./Application/Home/View/footer.html" />

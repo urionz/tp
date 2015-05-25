@@ -1,0 +1,110 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/check.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/blurSearch.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/css/blurSearch.css">
+<script type="text/javascript">
+	$ajaxUrl="{:U('Fhk/ajaxAction','','')}?id=";
+	var searchUrl="{:U('Fhk/index','','')}";
+</script>
+<style type="text/css">
+	table *{
+		font-size: 10px;
+		padding: 0px;
+		text-align: center;
+	}
+</style>
+<div>
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="{:U('Fhk/index','','')}">合同</a></li>
+		<li class="am-active">列表</li>
+		<li><a href="{:U('Fhk/index','','')}/action/export">导出</a></li>
+	</ol>
+	<form action="{:U('Fhk/index')}" id="SearchForm"  method="post">
+    <span>查找：</span>
+    	<select name="search" id="search">
+    		<option value="1">按合同号</option>
+    		<option value="2">按姓名</option>
+    	</select>
+    	
+		
+		<input type="text" autocomplete="off" name="target" oninput="Listener(this.value);" onpropertychange="Listener(this.value);" />
+
+		<div id="output"></div>
+
+    	<input type="submit" id="SearchBtn" value="查询"/>
+    	
+    </form>
+    <br/>
+	<table class="am-table am-table-striped am-table-bordered am-text-sm am-table-hover">
+		<tr class="am-success">
+				<th>合同号</th>
+				<th>客户名称</th>
+				<th>
+					放款金额
+					<a href="{:U('Fhk/index','','')}/order/fk_money/role/asc" title="升序">
+						<span class="am-icon-sort-amount-asc"></span>
+					</a>
+					<a href="{:U('Fhk/index','','')}/order/fk_money/role/desc" title="降序">
+						<span class="am-icon-sort-amount-desc"></span>
+					</a>
+				</th>
+				<th>放款类型</th>
+				<th>还款方式</th>
+				<th>期限</th>
+				<th>利率</th>
+				<th>
+					放款日期
+					<a href="{:U('Fhk/index','','')}/order/fk_date/role/asc" title="升序">
+						<span class="am-icon-sort-amount-asc"></span>
+					</a>
+					<a href="{:U('Fhk/index','','')}/order/fk_date/role/desc" title="降序">
+						<span class="am-icon-sort-amount-desc"></span>
+					</a>
+				</th>
+				<th>合同状态</th>
+				<th>业务员</th>
+				<th>备注</th>
+				<th>操作</th>
+		</tr>
+		<volist name="list" id="vo">
+			<tr>
+				<td><a href="{:U('Fhk/scan','','')}/id/{$vo.agree_num}">{$vo.agree_num}</a></td>
+				<td>{$vo.cname}</td>
+				<td>{:number_format($vo['fk_money'],2,'.',',')}</td>
+				<td>
+					<if condition="$vo.fk_type eq 1">信用
+						<elseif condition="$vo.fk_type eq 2" />抵押
+						<elseif condition="$vo.fk_type eq 3" />担保
+						<elseif condition="$vo.fk_type eq 4" />其他
+					</if>
+				</td>
+				<td>{$vo.hk_method}</td>
+				<td>{$vo.limit_time}</td>
+				<td>{:round($vo['rate']*100,2).'%'}</td>
+				<td>{$vo.fk_date|date='Y-m-d',###}</td>
+				<td>
+					<if condition="$vo['status'] eq 1">执行完毕
+						<else />执行中
+					</if>
+				</td>
+				<volist name="userinfo" id="uinfo">
+					<if condition="$uinfo['id'] eq $vo['saler']">
+						<td>{$uinfo.xingming}</td>
+					</if>
+				</volist>
+				<td><span title="{$vo.info}">{:SubTitle($vo['info'])}</span></td>
+				<td>
+					<a href="{:U('Fhk/scan','','')}/id/{$vo.agree_num}">详情|</a>
+					<a href="{:U('Fhk/deleteAction','','')}/id/{$vo.agree_num}" class="del">删除|</a>
+					<a href="{:U('Fhk/sk','','')}/id/{$vo.agree_num}">收款明细</a>
+				</td>
+			</tr>
+		</volist>
+	</table>
+	<div class="fengye">{$page}</div>
+</div>
+<include file="./Application/Home/View/footer.html" />

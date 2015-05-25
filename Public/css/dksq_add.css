@@ -1,0 +1,57 @@
+/*
+Dksq_add.html
+*/
+
+	.leir{
+		border: 2px solid #D7DEF0;
+		width: 1050px;
+		margin-top: 5px;
+		padding: 5px;
+	}
+	.list{
+		background-color: #93BCF5;
+		text-align: center;
+		height: 40px;
+		padding-top: 8px;
+	}
+	.lr{
+		margin: 5px 0;
+	}
+	.lr input{
+		height: 30px;
+	}
+	.lr select{
+		height: 30px;
+		font-size: 14px;
+		padding: 2px;
+	}
+	.fengexian{
+		padding-bottom: 5px;
+		border-bottom:2px dotted #cccccc;
+	}
+	
+	#sub{
+		width: 300px;
+		margin-top: 5px;
+		padding: 5px;
+	}
+	#sub input{
+		width:300px;
+		height: 37px;
+		text-align: center;
+		font-size: 16px;
+		cursor: pointer;
+		color: #fff;
+		border: 0;
+		background-color: #3ba354;
+	}
+	.lr fieldset{
+		margin: 8px 0;
+	}
+	
+table tr th{
+	padding: 5px;
+}
+ table tr td{
+	padding: 3px 10px;
+}

@@ -1,0 +1,226 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="#">员工信息</a></li>
+		<li class="am-success"><if condition="$is_exits eq null">添加详细信息<else />修改详细信息</if></li>
+	</ol>
+	<form action="{:U("Staff/info_addAction",'','')}/type/<if condition='$is_exits eq null'>add<else/>modify</if>" method="post" class="am-form" data-am-validator style="text-align: center;">
+		<table class="am-table am-table-striped am-table-bordered am-text-sm" title="测试">
+		    <caption>员工详细信息</caption>
+		    <tr>
+		        <th class="am-primary">姓名</th>
+		        <th class="am-primary">性别</th>
+		        <th class="am-primary">民族</th>
+		        <th class="am-primary">籍贯</th>
+		    	<th class="am-primary">出生日期</th>
+		    	<th class="am-primary">文化程度</th>
+		    </tr>
+		    <tr>
+		        <td>
+		        	<input type="text" value="{$UserInfo[0]['xingming']}" readonly="readonly">
+		        </td>
+		        <td>
+		        	<select name="sex">
+		        		<option value="1" <if condition="$is_exits[0]['sex'] eq 1">selected</if>>男</option>
+		        		<option value="2" <if condition="$is_exits[0]['sex'] eq 2">selected</if>>女</option>
+		        	</select>
+		        </td>
+		        <td>
+		        	<input name="nation" type="text" value=<if condition='$is_exits[0]["nation"]'>{$is_exits[0]["nation"]}</if> >
+		        </td>
+		        <td>
+		        	<input name="birth_place" type="text" value=<if condition="$is_exits[0]['birth_place']">{$is_exits[0]['birth_place']}</if>>
+		        </td>
+		    	<td>
+		    		<input name="birth" type="text" class="am-form-field js-pattern-date" readonly="readonly" data-am-datepicker="{format: 'yyyy-mm-dd'}" value=<if condition="$is_exits[0]['birth']">{$is_exits[0]['birth']|date="Y-m-d",###}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="edu_level" type="text" value=<if condition="$is_exits[0]['edu_level']">{$is_exits[0]['edu_level']}</if>>
+		    	</td>
+		    </tr>
+		    
+		    
+		    <tr>
+		    	<th  class="am-primary">婚姻状况</th>
+		    	<th  class="am-primary">健康状况</th>
+		    	<th  class="am-primary">政治面貌</th>
+		    	<th  class="am-primary">家庭号码</th>
+		    	<th  class="am-primary">手机号码</th>
+		    	<th  class="am-primary">身份证号</th>
+		    </tr>
+		    <tr>
+		    	<td>
+		    		<input name="is_marriage" type="text" value=<if condition="$is_exits[0]['is_marriage']">{$is_exits[0]['is_marriage']}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="health_status" type="text" value=<if condition="$is_exits[0]['health_status']">{$is_exits[0]['health_status']}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="political_status" type="text" value=<if condition="$is_exits[0]['political_status']">{$is_exits[0]['political_status']}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="h_tel" type="text" value=<if condition="$is_exits[0]['h_tel']">{$is_exits[0]['h_tel']}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="phone" type="text" value=<if condition="$is_exits[0]['phone']">{$is_exits[0]['phone']}</if>>
+		    	</td>
+		    	<td>
+		    		<input type="text" value="{$UserInfo[0]['sfid']}" readonly="readonly">
+		    	</td>
+		    </tr>
+		    <tr>
+		    	<th colspan="6"  class="am-primary">居住地址</th>
+		    </tr> 
+		    <tr> 
+		    	<td colspan="6"  class="am-primary">
+		    		<textarea name="addr" style="resize:none;"><if condition="$is_exits[0]['addr']">{$is_exits[0]['addr']}</if></textarea>
+		    	</td>
+		    </tr>
+		    <tr>
+		    	<th  class="am-primary">紧急联络人</th>
+		    	<th  class="am-primary">与本人关系</th>
+		    	<th  class="am-primary">联络人电话</th>
+		    	<th  class="am-primary">部门</th>
+		    	<th  class="am-primary">职位</th>
+		    	<th  class="am-primary">薪金</th>
+		    </tr>
+		    <tr>
+		    	<td>
+		    		<input name="emer_contact_pers" type="text" value=<if condition="$is_exits[0]['emer_contact_pers']">{$is_exits[0]['emer_contact_pers']}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="relationship" type="text" value=<if condition="$is_exits[0]['relationship']">{$is_exits[0]['relationship']}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="emer_contact_phone" type="text" value=<if condition="$is_exits[0]['emer_contact_phone']">{$is_exits[0]['emer_contact_phone']}</if>>
+		    	</td>
+		    	<td>
+		    	<input type="text" value='<if  condition="$UserInfo[0]['bumeng'] eq 1 ">总经办
+					<elseif  condition="$UserInfo[0]['bumeng'] eq 2 "/>风控部
+					<elseif  condition="$UserInfo[0]['bumeng'] eq 3 "/>财务部
+					<elseif  condition="$UserInfo[0]['bumeng'] eq 4 "/>技术部
+					<elseif  condition="$UserInfo[0]['bumeng'] eq 5 "/>市场部
+					<elseif  condition="$UserInfo[0]['bumeng'] eq 6 "/>客服部
+					</if>' readonly="readonly" />
+		    		
+		    	</td>
+		    	<td>
+		    		<input name="position" type="text" value=<if condition="$is_exits[0]['position']">{$is_exits[0]['position']}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="salery" type="text" value=<if condition="$is_exits[0]['salery']">{$is_exits[0]['salery']}</if>>
+		    	</td>
+		    </tr>
+		    <tr>
+		    	<th  class="am-primary">爱好</th>
+		    	<th  class="am-primary">特长</th>
+		    	<th  class="am-primary">愿望</th>
+		    	<th  class="am-primary">职业期望</th>
+		    	<th  class="am-primary">户籍地址</th>
+		    	<th  class="am-primary">入职时间</th>
+		    </tr>
+		    <tr>
+		    	<td>
+		    		<input name="hobby" type="text" value=<if condition="$is_exits[0]['hobby']">{$is_exits[0]['hobby']}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="speciality" type="text" value=<if condition="$is_exits[0]['speciality']">{$is_exits[0]['speciality']}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="wish" type="text" value=<if condition="$is_exits[0]['wish']">{$is_exits[0]['wish']}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="career_wish" type="text" value=<if condition="$is_exits[0]['career_wish']">{$is_exits[0]['career_wish']}</if>>
+		    	</td>
+		    	<td>
+		    		<input name="birth_place_addr" type="text" value=<if condition="$is_exits[0]['birth_place_addr']">{$is_exits[0]['birth_place_addr']}</if>>
+		    	</td>
+		    	<td>
+		    		<input type="text" value="{$UserInfo[0]['rzdate']|date="Y-m-d",###}" readonly="readonly" />
+		    	</td>
+		    </tr>
+		    <tr>
+		    	<th colspan="6"  class="am-primary">自我评价</th>
+		    </tr>
+		    <tr>
+		    	<td colspan="6">
+		    		<textarea name="self_assi" style="resize:none;"><if condition="$is_exits[0]['self_assi']">{$is_exits[0]['self_assi']}</if></textarea>
+		    	</td>
+		    </tr>
+		    <tr>
+		    	<th colspan="6"  class="am-primary">个人学习</th>
+		    </tr>
+		    <tr>
+		    	<td colspan="6">
+		    		<textarea name="grxx"><if condition="$is_exits[0]['grxx']">{$is_exits[0]['grxx']}</if></textarea>
+		    	</if>
+		    		
+		    	</td>
+		    </tr>
+		    <tr>
+		    	<th colspan="6"  class="am-primary">工作经历</th>
+		    </tr>
+		    <tr>
+		    	<td colspan="6">
+		    		<textarea name="his_work"><if condition="$is_exits[0]['his_work']">{$is_exits[0]['his_work']}</if></textarea>
+		    	</td>
+		    </tr>
+		    <tr>
+		    	<th colspan="6" class="am-primary">备注</th>
+		    </tr>
+		    <tr>
+		    	<td colspan="6">
+		    		<textarea name="remark" style="resize:none;"><if condition="$is_exits[0]['remark']">{$is_exits[0]['remark']}</if></textarea>
+		    	</td>
+		    </tr>
+		</table>
+		<input type="hidden" name="id" value="{$UserInfo[0]['id']}" />
+		<input type="submit" value="<if condition="$is_exits eq null">添加<else />修改</if>" class="am-btn am-btn-secondary"/>
+</form>
+
+
+		<!-- <div class="am-form-group">
+			姓名：
+			<input type="text" name="xingming" readonly="readonly" value="{$UserInfo[0]['xingming']}" class="js-pattern-zhongwen" required minlength="2" maxlength="5" />
+		</div>
+		<div class="am-form-group">
+			身份证号：
+			<input type="text" name="sfid" readonly="readonly" value="{$UserInfo[0]['sfid']}" class="js-pattern-idcard" required placeholder="必填" />
+		</div>
+		<div class="am-form-group">
+		部　　门：<select name="bumeng">
+					<option value="05" <if condition="$list.bumeng eq 5">selected="selected"</if>>市场部</option>
+					<option value="01" <if condition="$list.bumeng eq 1">selected="selected"</if>>总经办</option>
+					<option value="02" <if condition="$list.bumeng eq 2">selected="selected"</if>>风控部</option>
+					<option value="03" <if condition="$list.bumeng eq 3">selected="selected"</if>>财务部</option>
+					<option value="04" <if condition="$list.bumeng eq 4">selected="selected"</if>>技术部</option>
+					<option value="06" <if condition="$list.bumeng eq 6">selected="selected"</if>>客服部</option>
+				</select>
+		</div>		
+		<div class="am-form-group">
+		在职状态：<select name="status">
+					<option value="2" <if condition="$list.status eq 2">selected="selected"</if>>试用期</option>
+					<option value="0" <if condition="$list.status eq 0">selected="selected"</if>>在职</option>
+					<option value="1" <if condition="$list.status eq 1">selected="selected"</if>>离职</option>
+				</select>
+		</div>		
+		入职日期： 
+		<div class="am-form-group am-form-icon">
+			<i class="am-icon-calendar"></i>
+			<input name="rzdate" type="text" class="am-form-field" value="<if condition="$list.rzdate neq 0">{$list.rzdate|date="Y-m-d",###}</if>" data-am-datepicker />
+		</div>
+		离职日期：
+		<div class="am-form-group am-form-icon">
+			<i class="am-icon-calendar"></i>
+			<input name="lzdate" type="text" class="am-form-field" value="<if condition="$list.lzdate neq 0">{$list.lzdate|date="Y-m-d",###}</if>" data-am-datepicker />
+		</div>
+		<input type="hidden" name="id" value="{$list.id}" />
+		<input type="submit" value="<if condition="$list.id eq null">添加<else />修改</if>" class="am-btn am-btn-secondary"/> -->
+	
+	<hr>
+</div>
+
+<script src="__PUBLIC__/js/am_formyz.js" type="text/javascript"></script>
+<include file="./Application/Home/View/footer.html" />

@@ -1,0 +1,487 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/dksq_add.css">
+<script src="__PUBLIC__/laydate/laydate.js" type="text/javascript" charset="utf-8" ></script>
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="#">贷款申请</a></li>
+		<li class="am-active"><if condition="$list.id eq null">添加<else />修改</if></li>
+	</ol>
+	
+<form action="{:U('Dksq/addAction')}" method="post" data-am-validator class="am-form" >
+	<div class="leir">
+		<div class="list">
+		基本信息
+		</div>
+		<div class="lr">
+			<table border="0" cellspacing="7" width="1034px;">
+				<tr>
+					<td>申请编号：<input type="text" name="sqid" value="{$list.sqid}" required placeholder="必填" /></td>
+					<td>贷款类型：<select name="sqtype">
+									<option value="">请选择</option>
+									<option value="1" <if condition="$list.sqtype eq 1">selected="selected"</if>>薪金贷(无房产)</option>
+									<option value="2" <if condition="$list.sqtype eq 2">selected="selected"</if>>薪金贷(有房产)</option>
+									<option value="3" <if condition="$list.sqtype eq 3">selected="selected"</if>>企业贷(无房产)</option>
+									<option value="6" <if condition="$list.sqtype eq 6">selected="selected"</if>>企业贷(有房产)</option>
+									<option value="4" <if condition="$list.sqtype eq 4">selected="selected"</if>>房易贷</option>
+									<option value="5" <if condition="$list.sqtype eq 5">selected="selected"</if>>车易贷</option>
+								</select>
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>申请额度：<input type="text" name="sqje" value="{$list.sqje}" placeholder="纯数字（小于10000000）" class="js-pattern-number" max="10000000" /></td>
+					<td>贷款期限：<input type="text" name="qixian" value="{$list.qixian}" class="js-pattern-dksq_qx" placeholder="X个月或X天" /></td>
+					<td>贷款用途：<input type="text" list="url_list" name="yongtu" value="{$list.yongtu}" maxlength="10" placeholder="不超过10个字符" />
+						<datalist id="url_list">
+							<option value="短期拆借" />
+							<option value="资金周转" />
+						</datalist>
+					</td>
+				</tr>
+				<tr>
+					<td>信息来源：<input type="text" name="laiyuan" value="{$list.laiyuan}" maxlength="10" placeholder="不超过10个字符" /></td>
+					<td>申请日期：<input name="sqdate" type="text" value="<if condition='$list.sqdate neq 0'>{$list.sqdate|date="Y-m-d",###}</if>" onclick="laydate()"/>
+					</td>
+					<td>
+						还款情况：
+						<select name="hkstatus">	
+							<option value="0" <eq name="list.hkstatus" value="0">selected="selected"</eq> >--</option>
+							<option value="1" <eq name="list.hkstatus" value="1">selected="selected"</eq> >正常</option>
+							<option value="2" <eq name="list.hkstatus" value="2">selected="selected"</eq> >逾期30天内</option>
+							<option value="3" <eq name="list.hkstatus" value="3">selected="selected"</eq> >逾期30-60天内</option>
+							<option value="4" <eq name="list.hkstatus" value="4">selected="selected"</eq> >逾期超过60天</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<div class="leir">
+		<div class="list">
+			个人资料
+		</div>
+		<div class="lr">
+			<table border="0" cellspacing="7" width="1034px;">
+				<tr>
+					<td>姓名：<input type="text" name="xingming" value="{$grzl.xingming}" class="js-pattern-zhongwen" required minlength="2" maxlength="5" placeholder="必填（2-5 个中文字符）" /></td>
+					<td>证件类型：<select name="zjtype">
+									<option value="0" <if condition="$grzl.zjtype eq 0">selected="selected"</if>>身份证</option>
+									<option value="1" <if condition="$grzl.zjtype eq 1">selected="selected"</if>>护照</option>
+									<option value="2" <if condition="$grzl.zjtype eq 2">selected="selected"</if>>其他</option>
+									</select>
+					</td>
+					<td>				
+						证件号码：
+						<if condition="$list.id eq null">
+							<input type="text" name="zjhm" value="" class="js-pattern-idcard" required placeholder="必填" />
+							<else /><input type="hidden" name="zjhm" value="{$grzl.zjhm}" />{$grzl.zjhm}
+						</if>
+					</td>
+				</tr>
+				<tr>
+					<td>性别：<input type="radio" <if condition="$grzl.sex eq 0">checked="checked"</if> name="sex" value="0" />男
+							<input type="radio" name="sex" <if condition="$grzl.sex eq 1">checked="checked"</if> value="1" />女
+					</td>
+					<td>年龄：<input type="text" name="age" value="{$grzl.age}" maxlength="2" class="js-pattern-number" /></td>	
+					<td>出生日期：<input name="csdate" type="text" value="<if condition='$grzl.csdate neq 0'>{$grzl.csdate|date="Y-m-d",###}</if>" onclick="laydate()"/></td>
+				</tr>
+				<tr>
+					<td>社保号：<input type="text" name="sbhm" value="{$grzl.sbhm}" maxlength="18" /></td>
+					<td colspan="2">
+						  婚姻状况：<input type="radio" name="hyzk" <if condition="$grzl.hyzk eq 1">checked="checked"</if> value="1" />未婚
+									<input type="radio" name="hyzk" <if condition="$grzl.hyzk eq 2">checked="checked"</if> value="2" />已婚
+									<input type="radio" name="hyzk" <if condition="$grzl.hyzk eq 3">checked="checked"</if> value="3" />离婚
+									<input type="radio" name="hyzk" <if condition="$grzl.hyzk eq 4">checked="checked"</if> value="4" />分居
+									<input type="radio" name="hyzk" <if condition="$grzl.hyzk eq 5">checked="checked"</if> value="5" />丧偶	
+					</td>
+					
+				</tr>
+				<tr>
+					<td>E-mail:<input type="email" name="email" value="{$grzl.email}" /></td>
+					
+					<td colspan="2">教育程度：<input type="radio" name="jycd" <if condition="$grzl.jycd eq 1">checked="checked"</if> value="1" />初中或以上
+									<input type="radio" name="jycd" <if condition="$grzl.jycd eq 2">checked="checked"</if> value="2" />高中或中专
+									<input type="radio" name="jycd" <if condition="$grzl.jycd eq 3">checked="checked"</if> value="3" />大专
+									<input type="radio" name="jycd" <if condition="$grzl.jycd eq 4">checked="checked"</if> value="4" />本科或以上
+					</td>
+					
+				</tr>
+				<tr>
+					<td>居住证/暂住证：<input type="text" name="jzz" value="{$grzl.jzz}" maxlength="18" /></td>
+					<td>户口所在地：<input type="text" name="hukou" value="{$grzl.hukou}" maxlength="10" /></td>
+					<td>籍贯：<input type="text" name="jiguan" value="{$grzl.jiguan}" maxlength="10" /></td>
+				</tr>
+				<tr>
+					<td colspan="3">家庭是否知悉此项贷款：
+						<input type="radio" name="zxdk" <if condition="$grzl.zxdk eq 1">checked="checked"</if> value="1" />否
+						<input type="radio" name="zxdk" <if condition="$grzl.zxdk eq 2">checked="checked"</if> value="2" />是
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="fengexian"></div>
+
+		<div class="lr">
+			<fieldset>
+				<input type="hidden" name="zhuzaiid_1" value="{$zhuzai[0].id}" />
+    				<legend>住宅一</legend>
+				<table border="0" cellspacing="7" width="1015px;">
+					<tr>
+						<td colspan="2">
+							住宅地址：
+							<input type="text" name="adress_1" value="{$zhuzai[0].adress}" maxlength="50"/>
+						</td>
+						<td>居住时间：<input type="text" name="jzsj_1" value="{$zhuzai[0].jzsj}" maxlength="10" /></td>
+					</tr>
+					<tr>
+						<td>住宅电话：<input type="text" name="zztel_1" value="{$zhuzai[0].zztel}" maxlength="13"/></td>
+						<td>移动电话：<input type="text" name="phone_1" value="{$zhuzai[0].phone}" class="js-pattern-shouji" /></td>
+						<td>与谁居住：<input type="text" list="ysjz_list" name="ysjz_1" value="{$zhuzai[0].ysjz}" placeholder="双击可选择" maxlength="10"/>
+										<datalist id="ysjz_list">
+											<option value="独居" />
+											<option value="父母" />
+											<option value="兄弟/姐妹" />
+											<option value="同事" />
+											<option value="配偶" />
+											<option value="子女" />
+										</datalist>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">住宅类别：<input type="radio" name="zztype_1" <if condition="$zhuzai[0][zztype] eq 1">checked="checked"</if> value="1" />自购
+										<input type="radio" name="zztype_1" <if condition="$zhuzai[0][zztype] eq 2">checked="checked"</if> value="2" />家族拥有
+										<input type="radio" name="zztype_1" <if condition="$zhuzai[0][zztype] eq 3">checked="checked"</if> value="3" />朋友拥有
+										<input type="radio" name="zztype_1" <if condition="$zhuzai[0][zztype] eq 4">checked="checked"</if> value="4" />自建
+										<input type="radio" name="zztype_1" <if condition="$zhuzai[0][zztype] eq 5">checked="checked"</if> value="5" />宿舍
+										<input type="radio" name="zztype_1" <if condition="$zhuzai[0][zztype] eq 6">checked="checked"</if> value="6" />租用
+						</td>
+						<td>
+							每月还款/租金：<input type="text" name="myhk_1" value="{$zhuzai[0].myhk}" class="js-pattern-number" max="1000000" />
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<hr>
+			<fieldset>
+				<input type="hidden" name="zhuzaiid_2" value="{$zhuzai[1].id}" />
+    				<legend>住宅二</legend>
+				<table border="0" cellspacing="7" width="1015px;">
+					<tr>
+						<td colspan="2">
+							住宅地址：<input type="text" name="adress_2" value="{$zhuzai[1].adress}" maxlength="50" />
+						</td>
+						<td>居住时间：<input type="text" name="jzsj_2" value="{$zhuzai[1].jzsj}" maxlength="10" /></td>
+					</tr>
+					<tr>
+						<td>住宅电话：<input type="text" name="zztel_2" value="{$zhuzai[1].zztel}" maxlength="13" /></td>
+						<td>移动电话：<input type="text" name="phone_2" value="{$zhuzai[1].phone}" class="js-pattern-shouji" /></td>
+						<td>与谁居住：<input type="text" list="ysjz_list" name="ysjz_2" value="{$zhuzai[1].ysjz}" placeholder="双击可选择" maxlength="10" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">住宅类别：<input type="radio" name="zztype_2" <if condition="$zhuzai[1][zztype] eq 1">checked="checked"</if> value="1" />自购
+										<input type="radio" name="zztype_2" <if condition="$zhuzai[1][zztype] eq 2">checked="checked"</if> value="2" />家族拥有
+										<input type="radio" name="zztype_2" <if condition="$zhuzai[1][zztype] eq 3">checked="checked"</if> value="3" />朋友拥有
+										<input type="radio" name="zztype_2" <if condition="$zhuzai[1][zztype] eq 4">checked="checked"</if> value="4" />自建
+										<input type="radio" name="zztype_2" <if condition="$zhuzai[1][zztype] eq 5">checked="checked"</if> value="5" />宿舍
+										<input type="radio" name="zztype_2" <if condition="$zhuzai[1][zztype] eq 6">checked="checked"</if> value="6" />租用
+						</td>
+						<td>
+						每月还款/租金：<input type="text" name="myhk_2" value="{$zhuzai[1].myhk}" class="js-pattern-number" max="1000000" />
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+		</div>
+	</div>
+
+	<div class="leir">
+		<div class="list">
+		职业资料/公司资料
+		</div>
+		<div class="lr">
+			<fieldset>
+				<input type="hidden" name="zyzlid_1" value="{$danwei[0].id}" />
+    				<legend>单位一</legend>
+				<table border="0" cellspacing="7" width="1015px;">
+					<tr>
+						<td>单位名称：<input type="text" name="dwmc_1" value="{$danwei[0].dwmc}" maxlength="25"/></td>
+						<td>邮编：<input type="text" name="dwyb_1" value="{$danwei[0].dwyb}" class="js-pattern-yzbm" /></td>
+						<td>单位性质：<input type="text" list="dwxz_list" name="dwxingzi_1" value="{$danwei[0].dwxingzi}" placeholder="双击可选择" maxlength="10" />
+											<datalist id="dwxz_list">
+												<option value="政府机构" />
+												<option value="民营" />
+												<option value="私营" />
+												<option value="三资企业" />
+												<option value="国有企业" />
+												<option value="个体" />
+											</datalist>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">单位地址：<input type="text" name="dwdz_1" value="{$danwei[0].dwdz}" maxlength="50" /></td>
+						<td>单位电话：<input type="text" name="dwtel_1" value="{$danwei[0].dwtel}" maxlength="13" /></td>
+					</tr>
+					<tr>
+						<td>传真号码：<input type="text" name="dwcz_1" value="{$danwei[0].dwcz}" maxlength="13" /></td>
+						<td>单位网址：<input type="text" name="wangzhi_1" value="{$danwei[0].wangzhi}" /></td>
+						<td>行业类别：<input type="text" name="hylb_1" value="{$danwei[0].hylb}" /></td>
+					</tr>
+					<tr>
+						<td>职务：<input type="text" name="zhiwu_1" value="{$danwei[0].zhiwu}" /></td>
+						<td>服务年数：<input type="text" name="fwns_1" value="{$danwei[0].fwns}" placeholder="(年)" class="js-pattern-number" maxlength="2" /></td>
+						<td>部门：<input type="text" name="bumen_1" value="{$danwei[0].bumen}" /></td>
+					</tr>
+					<tr>
+						<td>每月收入：<input type="text" name="mshouru_1" value="{$danwei[0].mshouru}" class="js-pattern-number" max="9000000" /></td>
+						<td>每月支薪日：<input type="text" name="mzxdate_1" value="{$danwei[0].mzxdate}" class="js-pattern-number" max="31" maxlength="2" /></td>
+						<td>支付方式：<input type="text" name="zftype_1" list="zffs_list" value="{$danwei[0].zftype}" placeholder="双击可选择" maxlength="10" />
+							<datalist id="zffs_list">
+												<option value="现金" />
+												<option value="打卡" />
+												<option value="现金及打卡" />
+											</datalist>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" style="text-align:center;color:#919EAB">补充资料（适用于个体经营者）<div class="fengexian"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>个体经营类型：<input type="text" name="gttype_1" list="jylx_list" value="{$danwei[0].gttype}" placeholder="双击可选择" maxlength="10" />
+							<datalist id="jylx_list">
+												<option value="有限责任" />
+												<option value="个人独资" />
+												<option value="个体工商户" />
+											</datalist>
+						</td>
+						<td>工商登记号：<input type="text" name="gongshangnum_1" value="{$danwei[0].gongshangnum}" /></td>
+						<td>成立日期：<input name="cldate_1" type="text" value="<if condition='$danwei[0][cldate] neq 0'>{$danwei[0][cldate]|date="Y-m-d",###}</if>" onclick="laydate()"/></td>
+					</tr>
+					<tr>
+						<td>国/地税编号：<input type="text" name="guoshuinum_1" value="{$danwei[0].guoshuinum}" /></td>
+						<td>雇员人数：<input type="text" name="guyuan_1" value="{$danwei[0].guyuan}" class="js-pattern-number" maxlength="5" /></td>
+						<td>全年盈利：<input type="text" name="yingli_1" value="{$danwei[0].yingli}" class="js-pattern-number" max="900000000" /></td>
+					</tr>
+					<tr>
+						<td>经营场所：<select name="jycs_1">
+										<option value="">--</option>
+										<option <if condition="$danwei[0][jycs] eq '自有'">selected="selected"</if> value="自有">自有</option>
+										<option <if condition="$danwei[0][jycs] eq '租用'">selected="selected"</if> value="租用">租用</option>
+										<option <if condition="$danwei[0][jycs] eq '按揭'">selected="selected"</if> value="按揭">按揭</option>
+									</select>
+						</td>
+						<td>月供/租金：<input type="text" name="yuegong_1" value="{$danwei[0].yuegong}" class="js-pattern-number" max="1000000" /></td>
+					</tr>
+				</table>
+    			</fieldset>
+    			<hr>
+    			<fieldset>
+    				<input type="hidden" name="zyzlid_2" value="{$danwei[1].id}" />
+    				<legend>单位二</legend>
+				<table border="0" cellspacing="7" width="1015px;">
+					<tr>
+						<td>单位名称：<input type="text" name="dwmc_2" value="{$danwei[1].dwmc}" maxlength="25" /></td>
+						<td>邮编：<input type="text" name="dwyb_2" value="{$danwei[1].dwyb}" class="js-pattern-yzbm" /></td>
+						<td>单位性质：<input type="text" list="dwxz_list" name="dwxingzi_2" value="{$danwei[1].dwxingzi}" placeholder="双击可选择" maxlength="10" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">单位地址：<input type="text" name="dwdz_2" value="{$danwei[1].dwdz}" maxlength="50" /></td>
+						<td>单位电话：<input type="text" name="dwtel_2" value="{$danwei[1].dwtel}" maxlength="13" /></td>
+					</tr>
+					<tr>
+						<td>传真号码：<input type="text" name="dwcz_2" value="{$danwei[1].dwcz}" maxlength="13" /></td>
+						<td>单位网址：<input type="text" name="wangzhi_2" value="{$danwei[1].wangzhi}" /></td>
+						<td>行业类别：<input type="text" name="hylb_2" value="{$danwei[1].hylb}" /></td>
+					</tr>
+					<tr>
+						<td>职务：<input type="text" name="zhiwu_2" value="{$danwei[1].zhiwu}" /></td>
+						<td>服务年数：<input type="text" name="fwns_2" value="{$danwei[1].fwns}" placeholder="(年)" class="js-pattern-number" maxlength="2" /></td>
+						<td>部门：<input type="text" name="bumen_2" value="{$danwei[1].bumen}" /></td>
+					</tr>
+					<tr>
+						<td>每月收入：<input type="text" name="mshouru_2" value="{$danwei[1].mshouru}" class="js-pattern-number" max="9000000" /></td>
+						<td>每月支薪日：<input type="text" name="mzxdate_2" value="{$danwei[1].mzxdate}" class="js-pattern-number" max="31" maxlength="2" /></td>
+						<td>支付方式：<input type="text" name="zftype_2" list="zffs_list" value="{$danwei[1].zftype}" placeholder="双击可选择" maxlength="10" /></td>
+					</tr>
+					<tr>
+						<td colspan="3" style="text-align:center;color:#919EAB">补充资料（适用于个体经营者）<div class="fengexian"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>个体经营类型：<input type="text" name="gttype_2" list="jylx_list" value="{$danwei[1].gttype}" placeholder="双击可选择" maxlength="10" /></td>
+						<td>工商登记号：<input type="text" name="gongshangnum_2" value="{$danwei[1].gongshangnum}" /></td>
+						<td>成立日期：<input name="cldate_2" type="text" value="<if condition='$danwei[1][cldate] neq 0'>{$danwei[0][cldate]|date="Y-m-d",###}</if>" onclick="laydate()"/></td>
+					</tr>
+					<tr>
+						<td>国/地税编号：<input type="text" name="guoshuinum_2" value="{$danwei[1].guoshuinum}" /></td>
+						<td>雇员人数：<input type="text" name="guyuan_2" value="{$danwei[1].guyuan}" class="js-pattern-number" maxlength="5" /></td>
+						<td>全年盈利：<input type="text" name="yingli_2" value="{$danwei[1].yingli}" class="js-pattern-number" max="900000000" /></td>
+					</tr>
+					<tr>
+						<td>经营场所：<select name="jycs_2">
+										<option value="">--</option>
+										<option <if condition="$danwei[1][jycs] eq '自有'">selected="selected"</if> value="自有">自有</option>
+										<option <if condition="$danwei[2][jycs] eq '租用'">selected="selected"</if> value="租用">租用</option>
+										<option <if condition="$danwei[3][jycs] eq '按揭'">selected="selected"</if> value="按揭">按揭</option>
+									</select>
+						</td>
+						<td>月供/租金：<input type="text" name="yuegong_2" value="{$danwei[1].yuegong}" class="js-pattern-number" max="1000000" /></td>
+					</tr>
+				</table>
+    			</fieldset>
+		</div>
+	</div>
+
+	<div class="leir">
+		<div class="list">
+		房产资料
+		</div>
+		<div class="lr">
+			<table border="0" cellspacing="7" width="1034px;">
+				<tr>
+					<td colspan="2">房产地址：<input type="text" name="fcdizhi" value="{$fczl.fcdizhi}" maxlength="50" /></td>
+					<td>购买方式：<select name="gmtype">
+										<option <if condition="$list.id eq null">selected="selected"</if> value="">请选择</option>
+										<option <if condition="$list.id neq null & $fczl.gmtype eq 0">selected="selected"</if> value="0">一次性</option>
+										<option <if condition="$fczl.gmtype eq 1">selected="selected"</if> value="1">按揭</option>
+									</select>
+					</td>
+				</tr>
+				<tr>
+					<td>购买日期：<input name="gmdate" type="text" value="<if condition='$fczl.gmdate neq 0'>{$fczl.gmdate|date="Y-m-d",###}</if>" onclick="laydate()"/></td>
+					<td>面积：<input type="text" name="mianji" value="{$fczl.mianji}" placeholder="(平方米)" class="js-pattern-number" maxlength="8"/></td>
+					<td>按揭银行：<input type="text" name="bank" value="{$fczl.bank}" /></td>
+				</tr>
+				<tr>
+					<td>购买价格：<input type="text" name="goumai" value="{$fczl.goumai}" class="js-pattern-number" max="100000000" /></td>
+					<td>贷款年限：<input type="text" name="dknianxian" value="{$fczl.dknianxian}" placeholder="(年)" class="js-pattern-number" maxlength="2" /></td>
+					<td>月供还款：<input type="text" name="mhuankuan" value="{$fczl.mhuankuan}" class="js-pattern-number" max="10000000" /></td>
+				</tr>
+				<tr>
+					<td>贷款总额：<input type="text" name="dkze" value="{$fczl.dkze}" class="js-pattern-number" max="900000000" /></td>
+					<td>尚欠余额：<input type="text" name="yue" value="{$fczl.yue}" class="js-pattern-number" max="900000000" /></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="leir">
+		<div class="list">
+		配偶资料
+		</div>
+		<div class="lr">
+			<table border="0" cellspacing="7" width="1034px;">
+				<tr>
+					<td>姓名：<input type="text" name="matexm" value="{$grzl.matexm}" class="js-pattern-zhongwen" maxlength="5" /></td>
+					<td>年龄：<input type="text" name="mateage" value="{$grzl.mateage}" class="js-pattern-number" maxlength="2" /></td>
+					<td>联络电话：<input type="text" name="matephone" value="{$grzl.matephone}" /></td>
+				</tr>
+				<tr>
+					<td>单位名称：<input type="text" name="matedw" value="{$grzl.matedw}" /></td>
+					<td>月收入：<input type="text" name="matemsr" value="{$grzl.matemsr}" class="js-pattern-number" max="90000000" /></td>
+					<td>职位：<input type="text" name="matezw" value="{$grzl.matezw}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2">单位地址：<input type="text" name="matedwdz" value="{$grzl.matedwdz}" maxlength="50" /></td>
+					<td>单位电话：<input type="text" name="matedwtel" value="{$grzl.matedwtel}" /></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="leir">
+		<div class="list">
+		联系人资料
+		</div>
+		<div class="lr">
+			<fieldset>
+				<input type="hidden" name="lxrid_1" value="{$lxr[0].id}" />
+    				<legend>联系人一</legend>
+				<table border="0" cellspacing="7" width="1034px;">
+				<tr>
+					<td>姓名：<input type="text" name="nxname_1" value="{$lxr[0].nxname}" class="js-pattern-zhongwen" maxlength="5" /></td>
+					<td>关系：<input type="text" name="nxguanxi_1" value="{$lxr[0].nxguanxi}" /></td>
+					<td>年龄：<input type="text" name="nxage_1" value="{$lxr[0].nxage}" class="js-pattern-number" maxlength="2" /></td>
+				</tr>
+				<tr>
+					<td >住宅电话：<input type="text" name="nxzztel_1" value="{$lxr[0].nxzztel}" /></td>
+					<td>移动电话：<input type="text" name="nxphone_1" value="{$lxr[0].nxphone}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2">住址：<input type="text" name="nxzhuzhi_1" value="{$lxr[0].nxzhuzhi}" maxlength="50" /></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td >单位名称：<input type="text" name="nxdwmc_1" value="{$lxr[0].nxdwmc}" /></td>
+					<td>职务：<input type="text" name="nxzhiwu_1" value="{$lxr[0].nxzhiwu}" /></td>
+					<td>单位电话：<input type="text" name="nxdwtel_1" value="{$lxr[0].nxdwtel}" /></td>
+				</tr>
+			</table>
+			</fieldset>
+
+			<fieldset>
+				<input type="hidden" name="lxrid_2" value="{$lxr[1].id}" />
+    				<legend>联系人二</legend>
+				<table border="0" cellspacing="7" width="1034px;">
+				<tr>
+					<td>姓名：<input type="text" name="nxname_2" value="{$lxr[1].nxname}" class="js-pattern-zhongwen"  maxlength="5"/></td>
+					<td>关系：<input type="text" name="nxguanxi_2" value="{$lxr[1].nxguanxi}" /></td>
+					<td>年龄：<input type="text" name="nxage_2" value="{$lxr[1].nxage}" class="js-pattern-number" maxlength="2" /></td>
+				</tr>
+				<tr>
+					<td >住宅电话：<input type="text" name="nxzztel_2" value="{$lxr[1].nxzztel}" /></td>
+					<td>移动电话：<input type="text" name="nxphone_2" value="{$lxr[1].nxphone}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2">住址：<input type="text" name="nxzhuzhi_2" value="{$lxr[1].nxzhuzhi}" maxlength="50" /></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td >单位名称：<input type="text" name="nxdwmc_2" value="{$lxr[1].nxdwmc}" /></td>
+					<td>职务：<input type="text" name="nxzhiwu_2" value="{$lxr[1].nxzhiwu}" /></td>
+					<td>单位电话：<input type="text" name="nxdwtel_2" value="{$lxr[1].nxdwtel}" /></td>
+				</tr>
+			</table>
+			</fieldset>
+
+			<fieldset>
+				<input type="hidden" name="lxrid_3" value="{$lxr[2].id}" />
+    				<legend>联系人三</legend>
+				<table border="0" cellspacing="7" width="1034px;">
+				<tr>
+					<td>姓名：<input type="text" name="nxname_3" value="{$lxr[2].nxname}" class="js-pattern-zhongwen" maxlength="5" /></td>
+					<td>关系：<input type="text" name="nxguanxi_3" value="{$lxr[2].nxguanxi}" /></td>
+					<td>年龄：<input type="text" name="nxage_3" value="{$lxr[2].nxage}" class="js-pattern-number" maxlength="2" /></td>
+				</tr>
+				<tr>
+					<td >住宅电话：<input type="text" name="nxzztel_3" value="{$lxr[2].nxzztel}" /></td>
+					<td>移动电话：<input type="text" name="nxphone_3" value="{$lxr[2].nxphone}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2">住址：<input type="text" name="nxzhuzhi_3" value="{$lxr[2].nxzhuzhi}" maxlength="50" /></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td >单位名称：<input type="text" name="nxdwmc_3" value="{$lxr[2].nxdwmc}" /></td>
+					<td>职务：<input type="text" name="nxzhiwu_3" value="{$lxr[2].nxzhiwu}" /></td>
+					<td>单位电话：<input type="text" name="nxdwtel_3" value="{$lxr[2].nxdwtel}" /></td>
+				</tr>
+			</table>
+			</fieldset>
+		</div>
+	</div>
+	<input type="hidden" name="id" value="{$list.id}" />
+	<div id="sub">
+		<input type="submit" value="<if condition="$list.id eq null">添　　加<else />修　　改</if>"/>
+	</div>
+</form>
+</div>
+<script src="__PUBLIC__/js/am_formyz.js" type="text/javascript"></script>
+<include file="./Application/Home/View/footer.html" />

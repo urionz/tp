@@ -1,0 +1,61 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="#">申请人</a></li>
+		<li class="am-active">列表</li>
+	</ol>
+	
+	<table class="am-table am-table-bordered am-table-striped am-text-sm">
+		<tr class="am-success" >
+			<th>申请人姓名</th>
+			<th>证件类型</th>
+			<th>证件号码</th>
+			<th>年龄</th>
+			<th>性别</th>
+			<!--<th>社保号码</th>-->
+			<th>籍贯</th>
+			<th>户口所在地</th>
+			
+			<th>操作</th>
+		</tr>
+		<volist name="list" id="vo">
+			<tr>
+				<td>{$vo.xingming}</td>
+				<td><if  condition="$vo.zjtype eq 0 ">身份证
+					<elseif  condition="$vo.zjtype eq 1 "/>护照
+					<elseif  condition="$vo.zjtype eq 2 "/>其他
+				</if></td>
+				<td>
+					<if condition="$xg eq $vo.id ">
+						<form action="{:U('Dksq/zjhmxiugai')}" method="post" accept-charset="utf-8">
+							<input type="text" name="newzjhm" value="{$vo.zjhm}" />
+							<input type="hidden" name="grzl_id" value="{$vo.id}" />
+							<input type="hidden" name="p" value="{$p}" /><!--当前页码-->
+							<input type="submit" value="提交"/>
+							<a href="{:U('Dksq/sqrlist','','')}?p={$p}"><span class="am-icon-close"></span>取消</a>
+						</form>
+					<else/>
+					{$vo.zjhm}<a href="{:U('Dksq/sqrlist','','')}?p={$p}&xg={$vo.id}"title="修改"><span class="am-icon-edit"></span></a>
+					</if>
+				</td>
+				<td>{$vo.age}</td>
+				<td><if condition="$vo.sex eq 0">男
+					<elseif  condition="$vo.sex eq 1 "/>女</if></td>
+				<!--<td>{$vo.sbhm}</td>-->
+				<td>{$vo.jiguan}</td>
+				<td>{$vo.hukou}</td>
+				
+				<td>
+					<a href="#"><button class="am-btn am-btn-xs am-btn-default am-text-primary" title=""><span class="am-icon-file-text-o"> 查看</span></button></a>
+				</td>
+			</tr>
+		</volist>
+	</table>
+	<div class="fengye">{$page}</div>
+
+</div>
+
+
+<include file="./Application/Home/View/footer.html" />

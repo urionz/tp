@@ -1,0 +1,278 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<style type="text/css">
+	td{
+		100px;
+	}
+</style>
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="#">发标信息</a></li>
+		<li class="am-active">统计</li>
+	</ol>
+	
+	<!--2015年统计-->
+	<div class="am-panel am-panel-secondary">
+  		<div class="am-panel-hd">2015年</div>
+  		<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    	<div id="main2015" style="height:400px;width: 1200px;"></div>
+  		
+		<div class="am-panel-bd">
+			<blockquote>
+			  <p class="am-text-danger">全部</p>
+			</blockquote>
+		    <table class="am-table am-table-bordered am-text-sm ">
+				<tr>
+					<td class="am-success">月份</td>
+					<volist name="all2015" id="vo">
+						<td>{$vo.yuefeng}</td>
+					</volist>
+				</tr>
+				<tr>
+					<td class="am-success">总金额</td>
+					<volist name="all2015" id="vo">
+						<td>￥{$vo.money}</td>
+					</volist>
+				</tr>
+			</table>
+			
+			<hr>
+			<blockquote>
+			  <p class="am-text-danger">车贷E通</p>
+			</blockquote>
+			<table class="am-table am-table-bordered am-text-sm ">
+				<tr>
+					<td class="am-success">月份</td>
+					<volist name="ecar2015" id="vo">
+						<td>{$vo.yuefeng}</td>
+					</volist>
+				</tr>
+				<tr>
+					<td class="am-success">总金额</td>
+					<volist name="ecar2015" id="vo">
+						<td>￥{$vo.money}</td>
+					</volist>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<!--2014年统计-->
+	<div class="am-panel am-panel-secondary">
+  		<div class="am-panel-hd">2014年</div>
+  		<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    	<div id="main2014" style="height:400px;width: 1200px;"></div>
+  		
+		<div class="am-panel-bd">
+			<blockquote>
+			  <p class="am-text-danger">全部</p>
+			</blockquote>
+		    <table class="am-table am-table-bordered am-text-sm ">
+				<tr>
+					<td class="am-success">月份</td>
+					<volist name="all2014" id="vo">
+						<td>{$vo.yuefeng}</td>
+					</volist>
+				</tr>
+				<tr>
+					<td class="am-success">总金额</td>
+					<volist name="all2014" id="vo">
+						<td>￥{$vo.money}</td>
+					</volist>
+				</tr>
+			</table>
+			
+			<hr>
+			<blockquote>
+			  <p class="am-text-danger">车贷E通</p>
+			</blockquote>
+			<table class="am-table am-table-bordered am-text-sm ">
+				<tr>
+					<td class="am-success">月份</td>
+					<volist name="ecar2014" id="vo">
+						<td>{$vo.yuefeng}</td>
+					</volist>
+				</tr>
+				<tr>
+					<td class="am-success">总金额</td>
+					<volist name="ecar2014" id="vo">
+						<td>￥{$vo.money}</td>
+					</volist>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<!--2013年统计-->
+	<div class="am-panel am-panel-secondary">
+  		<div class="am-panel-hd">2013年</div>
+  		<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    	<div id="main2013" style="height:400px;width: 700px;"></div>
+    	
+		<div class="am-panel-bd">
+			<blockquote>
+			  <p class="am-text-danger">全部</p>
+			</blockquote>
+		    <table class="am-table am-table-bordered am-text-sm ">
+				<tr>
+					<td class="am-success">月份</td>
+					<volist name="all2013" id="vo">
+						<td>{$vo.yuefeng}</td>
+					</volist>
+				</tr>
+				<tr>
+					<td class="am-success">总金额</td>
+					<volist name="all2013" id="vo">
+						<td>￥{$vo.money}</td>
+					</volist>
+				</tr>
+			</table>
+		</div>
+		
+	</div>
+	
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/echarts2.1.10/echarts.js"></script>
+<script type="text/javascript">
+	// 路径配置
+	require.config({
+		paths: {
+			echarts: '__PUBLIC__/echarts2.1.10'
+		}
+	});
+	        
+	// 使用
+    require(
+    	['echarts',
+    	'echarts/chart/line' // 使用折线图就加载line模块，按需加载
+    	],
+        function (ec) {
+        	// 基于准备好的dom，初始化echarts图表
+            var myChart2013 = ec.init(document.getElementById('main2013'));
+            var myChart2014 = ec.init(document.getElementById('main2014'));
+            var myChart2015 = ec.init(document.getElementById('main2015'));
+                
+            var option2013 = {
+                tooltip: {
+                    show: true,
+                    trigger: 'item',
+                    formatter: "月　份:{b}月<br/> 成交量: ￥{c}"
+                },
+                legend: {
+                    data:['全部']
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+			            axisLabel : {
+			                formatter: '2013/{value}'
+			            },
+                        boundaryGap : false,//类目起始和结束两端不留空白
+                        data : [{$tj2013.yuefeng}]
+                    }
+                ],
+                yAxis : [
+                	{
+                		name: '成交量',
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        "name":"全部",
+                        "type":"line",
+                        "data":[{$tj2013.money}]
+                    }
+                ]
+            };
+            
+            
+            var option2014 = {
+                tooltip: {
+                    show: true,
+                    trigger: 'item',
+                    formatter: "月　份:{b}月<br/> 成交量: ￥{c}"
+                },
+                legend: {
+                    data:['全部','车贷E通']
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+			            axisLabel : {
+			                formatter: '2014/{value}'
+			            },
+                        boundaryGap : false,//类目起始和结束两端不留空白
+                        data : [{$tj2014.yuefeng}]
+                    }
+                ],
+                yAxis : [
+                	{
+                		name: '成交量',
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        "name":"全部",
+                        "type":"line",
+                        "data":[{$tj2014.money}]
+                    },
+                    {
+                        "name":"车贷E通",
+                        "type":"line",
+                        "data":[0,0,0,{$tj2014.e_money}]
+                    }
+                ]
+            };
+            
+            
+            var option2015 = {
+                tooltip: {
+                    show: true,
+                    trigger: 'item',
+                    formatter: "月　份:{b}月<br/> 成交量: ￥{c}"
+                },
+                legend: {
+                    data:['全部','车贷E通']
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+			            axisLabel : {
+			                formatter: '2015/{value}'
+			            },
+                        boundaryGap : false,//类目起始和结束两端不留空白
+                        data : [{$tj2015.yuefeng}]
+                    }
+                ],
+                yAxis : [
+                	{
+                		name: '成交量',
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        "name":"全部",
+                        "type":"line",
+                        "data":[{$tj2015.money}]
+                    },
+                    {
+                        "name":"车贷E通",
+                        "type":"line",
+                        "data":[{$tj2015.e_money}]
+                    }
+                ]
+            };
+        
+            // 为echarts对象加载数据 
+            myChart2013.setOption(option2013); 
+            myChart2014.setOption(option2014); 
+            myChart2015.setOption(option2015);
+        }
+    );
+</script>
+
+<include file="./Application/Home/View/footer.html" />

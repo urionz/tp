@@ -1,0 +1,57 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
+<script>
+    $(function(){
+        $UserAjaxUrl="{:U('User/Manage','','')}";
+        msgSwitchResult={$UserInfo['msgswitch']};
+        msgSaveResult={$UserInfo['msgsave']};
+    });
+</script>
+<div class="admin-content">
+    <ol class="am-breadcrumb">
+        <li><a href="{:U('User/Manage','','')}">设置中心</a></li>
+    </ol>
+    <form action="javascript:;" method="post" accept-charset="utf-8" class="am-form" data-am-validator>
+        <fieldset>
+            <legend>修改密码</legend>
+            <div class="am-form-group">
+            <label>原密码：</label>
+                <input type="text" name="oldpsw" class='oldpsw am-form-field' placeholder="不填写则不修改" />
+            </div>
+            <div class="am-form-group">
+            <label>新密码：</label>
+                <input type="text" name="newpsw1" class='newpsw1 am-form-field' placeholder="不填写则不修改" />
+            </div>
+            <div class="am-form-group">
+            <label>确认：</label>
+                <input type="text" name="newpsw2" class='newpsw2 am-form-field' placeholder="不填写则不修改" />
+            </div>
+
+            <legend>内信设置</legend>
+            <div class="am-form-group">
+            <label>接 收 站 内 信：</label>
+            <if condition="$UserInfo['msgSwitch'] eq 1">
+                <button type="button" class="msgSwitchOn am-btn-sm am-btn-secondary am-radius am-icon-toggle-on am-icon-sm"> On</button>
+                <button type="button" style="display:none;" class="msgSwitchOff am-btn-sm am-btn-secondary am-radius am-icon-toggle-off am-icon-sm"> Off</button>
+                <else />
+                    <button type="button" class="msgSwitchOff am-btn-sm am-btn-secondary am-radius am-icon-toggle-off am-icon-sm"> Off</button>
+                    <button type="button" style="display:none;" class="msgSwitchOn am-btn-sm am-btn-secondary am-radius am-icon-toggle-on am-icon-sm"> On</button>
+            </if>
+            </div>
+
+            <div class="am-form-group">
+            <label>允许保存发件：</label>
+            <if condition="$UserInfo['msgSave'] eq 1">
+                <button type="button" class="msgSaveOn am-btn-sm am-btn-secondary am-radius am-icon-toggle-on am-icon-sm"> On</button>
+                <button type="button" style="display:none;" class="msgSaveOff am-btn-sm am-btn-secondary am-radius am-icon-toggle-off am-icon-sm"> Off</button>
+                <else />
+                    <button type="button" class="msgSaveOff am-btn-sm am-btn-secondary am-radius am-icon-toggle-off am-icon-sm"> Off</button>
+                    <button type="button" style="display:none;" class="msgSaveOn am-btn-sm am-btn-secondary am-radius am-icon-toggle-on am-icon-sm"> On</button>
+            </if>
+            </div>
+            <button class="am-btn am-btn-secondary" id="doc-confirm-toggle" type="submit">保存</button>
+        </fieldset>
+    </form>
+</div>
+<include file="./Application/Home/View/footer.html" />

@@ -1,0 +1,237 @@
+<!-- 贷款申请查看页面 -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/dksq.css">
+		<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
+	</head>
+	<body>
+		<div id="chakan_header">
+			<a href="{:U('Dksq/index')}"><img height="50px" src="__PUBLIC__/img/logo1.jpg" /></a>
+		</div>
+		<div id="chakan">
+			<div id="top">
+				<b>贷款申请表</b>
+				<span class="sp1">贷款类型：<if  condition="$list.sqtype eq 1 ">薪金贷(无房产)
+					<elseif  condition="$list.sqtype eq 2 "/>薪金贷(有房产)
+					<elseif  condition="$list.sqtype eq 3 "/>企业贷(无房产)
+					<elseif  condition="$list.sqtype eq 4 "/>房易贷
+					<elseif  condition="$list.sqtype eq 5 "/>车易贷
+					<elseif  condition="$list.sqtype eq 6 "/>企业贷(有房产)
+					</if></span>
+				<span class="sp2">申请编号：{$list.sqid}</span>
+			</div>
+			<div id="sqxx" class="mg_top">
+				<table class="cktable">
+					<tr>
+						<td>申请额度：￥{$list.sqje}</td>
+						<td>贷款期限：{$list.qixian}</td>
+						<td>贷款用途：{$list.yongtu}</td>
+						<td>信息来源：{$list.laiyuan}</td>
+						<td>申请日期：<if condition='$list.sqdate neq 0'>{$list.sqdate|date="Y年m月d日",###}</if></td>
+					</tr>
+				</table>
+			</div>
+			<!-- 个人资料 -->
+			<div id="grzl" class="mg_top">
+				<table class="cktable">
+					<tr><th colspan="6">个人资料</th></tr>
+					<tr>
+						<td rowspan="4">基</br>本</br>信</br>息</td>
+						<td rowspan="2">姓名：{$grzl.xingming}</td>
+						<td rowspan="2">性别：<if condition="$grzl.sex eq 0">男
+									<elseif  condition="$grzl.sex eq 1 "/>女</if>
+						</td>
+						<td rowspan="2">证件：<if  condition="$grzl.zjtype eq 0 ">身份证
+								<elseif  condition="$grzl.zjtype eq 1 "/>护照
+								<elseif  condition="$grzl.zjtype eq 2 "/>其他
+								</if>（{$grzl.zjhm}）
+						</td>
+						<td colspan="2">出生日期：<if condition='$grzl.csdate neq 0'>{$grzl.csdate|date="Y年m月d日",###}</if></td>
+					</tr>
+					<tr>
+						<td>户口所在地：{$grzl.hukou}</td>
+						<td>籍贯：{$grzl.jiguan}</td>
+					</tr>
+					<tr>
+						<td rowspan="2">年龄：<if condition='$grzl.age neq 0'>{$grzl.age}</if></td>
+						<td rowspan="2">婚姻状况：<if  condition="$grzl.hyzk eq 1 ">未婚
+								<elseif  condition="$grzl.hyzk eq 2 "/>已婚
+								<elseif  condition="$grzl.hyzk eq 3 "/>离婚
+								<elseif  condition="$grzl.hyzk eq 4 "/>分居
+								<elseif  condition="$grzl.hyzk eq 5 "/>丧偶
+								</if>
+						</td>
+						<td>社会保险卡电脑号：{$grzl.sbhm}</td>
+						<td colspan="2" rowspan="2">教育程度：<if  condition="$grzl.jycd eq 1 ">初中或以下
+								<elseif  condition="$grzl.jycd eq 2 "/>高中或中专
+								<elseif  condition="$grzl.jycd eq 3 "/>大专
+								<elseif  condition="$grzl.jycd eq 4 "/>本科或以上
+								</if>
+						</td>
+					</tr>
+					<tr>
+						<td>武汉市居住证/暂住证：{$grzl.jzz}</td>
+					</tr>
+					<!-- 住宅信息一 -->
+					<volist name="zhuzai" id="vozz">
+					<tr>
+						<td rowspan="2">住</br>宅</br>
+							<if condition="$key eq 0 ">一
+							<elseif condition="$key eq 1 "/>二
+							</if>
+						</td>
+						<td colspan="3">住址：{$vozz.adress}</td>
+						<td>居住时间：{$vozz.jzsj}</td>
+						<td>与谁居住：{$vozz.ysjz}</td>
+					</tr>
+					<tr>
+						<td colspan="2">住宅电话：{$vozz.zztel}</td>
+						<td>移动电话：{$vozz.phone}</td>
+						<td>住宅类别：<if condition='$vozz.zztype eq 1'>自购
+							<elseif condition='$vozz.zztype eq 2'/>家族拥有
+							<elseif condition='$vozz.zztype eq 3'/>朋友拥有
+							<elseif condition='$vozz.zztype eq 4'/>自建
+							<elseif condition='$vozz.zztype eq 5'/>宿舍
+							<elseif condition='$vozz.zztype eq 6'/>租用</if>
+						</td>
+						<td>每月还款/租金：￥{$vozz.myhk}</td>
+					</tr>
+					</volist>
+					<!-- 住宅信息结束 -->
+					<tr>
+						<td colspan="3">电邮地址：{$grzl.email}</td>
+						<td colspan="3">家庭是否知悉此项贷款：<if condition="$grzl.zxdk eq 1 ">否
+							<elseif condition="$grzl.zxdk eq 2 "/>是
+							</if></td>
+					</tr>
+				</table>
+			</div>
+			
+		<!-- 职业资料-->
+			<div id="zyzl" class="mg_top">
+				<table class="cktable">
+					<tr><th colspan="6">职业资料/公司资料</th></tr>
+					
+					<volist name="danwei" id="vodw">
+					<tr>
+						<th rowspan="2">单</br>位</br>
+							<if condition="$key eq 0 ">一
+							<elseif condition="$key eq 1 "/>二
+							</if>
+						</th>
+						<td colspan="2">名称：{$vodw.dwmc}</td>
+						<td>性质：{$vodw.dwxingzi}</td>
+						<td>行业类别：{$vodw.hylb}</td>
+						<td>单位电话：{$vodw.dwtel}</td>
+					</tr>
+					<tr>
+						<td colspan="3">地址：{$vodw.dwdz}</td>
+						<td>邮编：<if condition='$vodw.dwyb neq 0'>{$vodw.dwyb}</if></td>
+						<td>传真号码：{$vodw.dwcz}</td>
+					</tr>
+					<tr>
+						<td colspan="3">单位网址：{$vodw.wangzhi}</td>
+						<td>职务：{$vodw.zhiwu}</td>
+						<td>服务年数：<if condition='$vodw.fwns neq 0'>{$vodw.fwns}</if></td>
+						<td>部门：{$vodw.bumen}</td>
+					</tr>
+					<tr>
+						<td colspan="3">每月收入：￥{$vodw.mshouru}</td>
+						<td colspan="2">每月支薪日：<if condition='$vodw.mzxdate neq 0'>{$vodw.mzxdate}</if></td>
+						<td>支付方式：{$vodw.zftype}</td>
+					</tr>
+					<tr><td colspan="6" style="text-align: center">补充资料（适用于个体经营者）</td></tr>
+					<tr>
+						<td colspan="3">个体经营类型：{$vodw.gttype}</td>
+						<td>工商登记号：{$vodw.gongshangnum}</td>
+						<td>经营场所：{$vodw.jycs}</td>
+						<td>月供/租金：￥{$vodw.yuegong}</td>
+					</tr>
+					<tr>
+						<td colspan="3">成立日期：<if condition='$vodw.cldate neq 0'>{$vodw.cldate|date="Y年m月d日",###}</if></td>
+						<td>国/地税编号：{$vodw.guoshuinum}</td>
+						<td>雇员人数：<if condition='$vodw.guyuan neq 0'>{$vodw.guyuan}</if></td>
+						<td>全年盈利：￥{$vodw.yingli}</td>
+					</tr>
+					</volist>
+				</table>
+			</div>
+			
+			<!--房产资料-->
+			<div id="fczl" class="mg_top">
+				<table class="cktable">
+					<tr><th colspan="6">房产资料</th></tr>
+					<tr>
+						<td colspan="3">房产地址：{$fczl.fcdizhi}</td>
+						<td>购买方式：<if condition="$fczl.gmtype eq 0 ">一次性
+							<elseif condition="$fczl.gmtype eq 1 "/>按揭
+							</if></td>
+						<td>购买日期：<if condition='$fczl.gmdate neq 0'>{$fczl.gmdate|date="Y年m月d日",###}</if></td>
+						<td>面积：{$fczl.mianji}</td>
+					</tr>
+					<tr>
+						<td>按揭银行：{$fczl.bank}</td>
+						<td>购买价格：￥{$fczl.goumai}</td>
+						<td>贷款年限：<if condition='$fczl.dknianxian neq 0'>{$fczl.dknianxian}</if></td>
+						<td>月供还款：￥{$fczl.mhuankuan}</td>
+						<td>贷款总额：￥{$fczl.dkze}</td>
+						<td>尚欠余额：￥{$fczl.yue}</td>
+					</tr>
+				</table>
+			</div>
+			
+			<!--配偶资料-->
+			<div class="mg_top">
+				<table class="cktable">
+					<tr><th colspan="6">配偶资料</th></tr>
+					<tr>
+						<td>姓名：{$grzl.matexm}</td>
+						<td>年龄：<if condition='$grzl.mateage neq 0'>{$grzl.mateage}</if></td>
+						<td>联络电话：{$grzl.matephone}</td>
+						<td>月收入：￥{$grzl.matemsr}</td>
+						<td>职位：{$grzl.matezw}</td>
+						<td>单位电话：{$grzl.matedwtel}</td>
+					</tr>
+					<tr>
+						<td colspan="2">单位名称：{$grzl.matedw}</td>
+						<td colspan="4">单位地址：{$grzl.matedwdz}</td>
+					</tr>
+				</table>
+			</div>
+			
+			<!--联系人资料-->
+			<div id="zyzl" class="mg_top">
+				<table class="cktable">
+					<tr><th colspan="7">联系人资料</th></tr>
+					
+					<volist name="lxr" id="volxr">
+					<tr>
+						<th rowspan="2">
+							<if condition="$key eq 0 ">1
+							<elseif condition="$key eq 1 "/>2
+							<elseif condition="$key eq 2 "/>3
+							</if>
+						</th>
+						<td>姓名：{$volxr.nxname}</td>
+						<td>年龄：<if condition='$volxr.nxage neq 0'>{$volxr.nxage}</if></td>
+						<td>关系：{$volxr.nxguanxi}</td>
+						<td>移动电话：{$volxr.nxphone}</td>
+						<td>住宅电话：{$volxr.nxzztel}</td>
+						<td>单位电话：{$volxr.nxdwtel}</td>
+					</tr>
+					<tr>
+						<td colspan="3">住址：{$volxr.nxzhuzhi}</td>
+						<td colspan="2">单位名称：{$volxr.nxdwmc}</td>
+						<td>职务：{$volxr.nxzhiwu}</td>
+					</tr>
+					</volist>
+				</table>
+			</div>
+			
+			
+		</div>
+	</body>
+</html>
+		

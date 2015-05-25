@@ -1,0 +1,142 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<script type="text/javascript" charset="utf-8">
+			$(function(){
+				$('.ulnav').each(function(){
+					$(this).mousemove(function(){
+						$(this).children().show();
+					});
+					$(this).mouseleave(function(){
+						$(this).children().hide();
+					});
+				});
+				$(window).scroll(function(){
+					var nWidth=document.documentElement.scrollLeft||document.body.scrollLeft;
+					var oDiv=$('.div1');
+					oDiv.css('left',nWidth+'px');
+				});
+				
+			});
+</script>
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="{:U('Fhk/detail','','')}">放款统计</a></li>
+		<li class="am-active">列表</li>
+	</ol>
+	<table class="am-table am-table-striped am-table-bordered am-text-sm " style="text-align: center;">
+		<tr class="am-success">
+			<th>合同号</th>
+			<th>客户名称</th>
+			<th>身份证号</th>
+			<th>放款金额</th>
+			<th>放款类型</th>
+			<th>期限</th>
+			<th>利率</th>
+			<th>放款日期</th>
+			<th>还款方式</th>
+			<th>业务员</th>
+			<th>合同状态</th>
+		</tr>
+		<volist name="Details" id="vo">
+		<tr>
+			<td><a href="{:U('Fhk/scan','','')}/id/{$vo.agree_num}">{$vo.agree_num}</a></td>
+			<td>{$vo.cname}</td>
+			<td>{$vo.id_card}</td>
+			<td>{:number_format($vo['fk_money'],2,'.',',')}</td>
+			<td>
+				<if condition="$vo['fk_type'] eq 1">信用
+					<elseif condition="$vo['fk_type'] eq 2" />抵押
+					<else />担保
+				</if>
+			</td>
+			<td>{$vo.limit_time}</td>
+			<td>{:round($vo['rate']*100,2).'%'}</td>
+			<td>{$vo.fk_date|date="Y-m-d",###}</td>
+			<td>{$vo.hk_method}</td>
+			<td>{$vo.saler}</td>
+			<td>
+				<php>
+				$count=0;
+				$result_money=0;
+				$result_yh_money=0;
+				$result_hthk=0;
+				$result_hzje=0;
+				$result_tqhkqx=0;
+				$result_wyj=0;
+				$result_fx=0;
+				foreach($infos as $v)
+				{
+					if($vo['agree_num']==$v['agree_num'])
+					{
+						if(!empty($v['receive_date']))
+						{
+							$count++;
+							$result_yh_money+=$v['result_money'];
+						}
+					}
+				}
+				if($count==$vo['limit_time'])
+					echo '已完毕';
+				else
+					echo '执行中';
+			</php>
+			</td>
+		</tr>
+		</volist>
+		<tr>
+			<td>统计：{$AgreeCount}</td>
+			<td>--</td>
+			<td>--</td>
+			<td class="ulnav">浏览..
+				<div class="hide">
+					直接汇总：{:number_format($FkCount,2,'.',',')}<br/>均月汇总：{:number_format($Jyhz,2,'.',',')}
+				</div>
+			</td>
+			<td class="ulnav">浏览..
+				<div class="hide">
+				<if condition="$FkTyCount[0]['fk_type'] eq 1">信用：
+					<elseif condition="$FkTyCount[0]['fk_type'] eq 2" />抵押：
+					<else />担保：
+				</if>
+				{$FkTyCount[0]['count']}<br />
+				<if condition="$FkTyCount[1]['fk_type'] eq 1">信用：
+					<elseif condition="$FkTyCount[1]['fk_type'] eq 2" />抵押：
+					<else />担保：
+				</if>
+				{$FkTyCount[1]['count']}<br />
+				<if condition="$FkTyCount[2]['fk_type'] eq 1">信用：
+					<elseif condition="$FkTyCount[2]['fk_type'] eq 2" />抵押：
+					<else />担保：
+				</if>
+				{$FkTyCount[2]['count']}
+				</div>
+			</td>
+			<td><!-- {:number_format($LimSum,2,'.',',')} -->--</td>
+			<td><!-- {:round($Rate_sum*100,2).'%'} -->--</td>
+			<td>--</td>
+			<td class="ulnav">浏览..
+				<div class="hide">
+					等额本息：{$deCount}<br/>
+					等本等息：{$dbCount}<br/>
+					到期本息：{$dqCount}<br/>
+					先息后本：{$xxCount}<br/>
+				</div>
+			</td>
+			<td class="ulnav">浏览..
+				<div class="hide">
+				<volist name="SaCount" id="sa">
+					{$sa.saler}：{$sa.count}<br/>
+				</volist>
+				</div>
+			</td>
+			<td class="ulnav">浏览..
+				<div class="hide">
+					执行中：{$ZxzSum}<br/>已完毕：{$YwcSum}
+				</div>
+			</td>
+		</tr>
+	</table>
+	<div class="fengye">{$page}<div/>
+</div>
+<include file="./Application/Home/View/footer.html" />

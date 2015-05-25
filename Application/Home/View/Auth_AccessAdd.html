@@ -1,0 +1,67 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<script type="text/javascript" src="__PUBLIC__/js/check.js"></script>
+<script>
+	$postUrl="{:U('Auth/AccessAdd','','')}/sq/{$groupInfo.id}";
+	$ajaxUrl="{:U('Auth/Condition')}"
+</script>
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="{:U('Auth/index')}">用户组</a></li>
+		<li><a href="{:U('/Home/Auth/accessList/sq','','')}/{$groupInfo.id}">{$groupInfo.title}</a></li>
+		<li class="am-active">成员添加</li>
+	</ol>
+
+	<div class="width_600">
+	部门筛选：<select id="orderOption">
+							<option value="">全部</option>
+							<volist name="bumens" id="vo" onchange="bumen">
+								<option value="{$vo.bumeng}" <if condition="$condition eq $vo['bumeng']">selected="selected"</if> >
+									<if  condition="$vo.bumeng eq 1 ">总经办
+										<elseif  condition="$vo.bumeng eq 2 "/>风控部
+										<elseif  condition="$vo.bumeng eq 3 "/>财务部
+										<elseif  condition="$vo.bumeng eq 4 "/>技术部
+										<elseif  condition="$vo.bumeng eq 5 "/>市场部
+										<elseif  condition="$vo.bumeng eq 6 "/>客服部
+									</if>
+								</option>
+							</volist>
+						</select>
+	<table class="am-table am-table-bordered am-table-striped am-text-sm ">
+		<tr class="am-text-warning">
+			<td width="50px">添加</td>
+			<td>姓名</td>
+			<td>员工编号</td>
+			<td>所属部门</td>
+		</tr>
+		<form action="{:U('Auth/AccessAdd')}" method="post" id="infoForm">
+			<input type="hidden" name="sq" value="{$groupInfo.id}"/>
+		<volist name="list" id="vo">
+		<tr>
+			<td>
+				<input type="checkbox" name="selects[]" value="{$vo.id}"/>
+			</td>
+			<td>{$vo.xingming}</td>
+			<td>{$vo.username}</td>
+			<td><if  condition="$vo.bumeng eq 1 ">总经办
+				<elseif  condition="$vo.bumeng eq 2 "/>风控部
+				<elseif  condition="$vo.bumeng eq 3 "/>财务部
+				<elseif  condition="$vo.bumeng eq 4 "/>技术部
+				<elseif  condition="$vo.bumeng eq 5 "/>市场部
+				<elseif  condition="$vo.bumeng eq 6 "/>客服部
+				</if>
+			</td>
+		</tr>
+		</volist>
+		<tr>
+			<td colspan="4">
+				<input type="submit" name="addBtn" id="subBtn" class="am-btn am-btn-secondary am-btn-block am-round" value="添加" />
+			</td>
+		</tr>
+		</form>
+	</table>
+	<div class="fengye">{$page}</div>
+	</div>
+</div>
+<include file="./Application/Home/View/footer.html" />

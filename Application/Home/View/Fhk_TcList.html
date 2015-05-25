@@ -1,0 +1,43 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<style type="text/css">
+	table *{
+		font-size: 10px;
+		padding: 0px;
+		text-align: center;
+	}
+</style>
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="{:U('Fhk/TcList','','')}">提成统计</a></li>
+		<li class="am-active">列表</li>
+	</ol>
+	<div class="am-form-group">
+    
+    <form action="{:U('Fhk/TcList')}" method="post">
+    <label>开始日期</label>
+    	<input name="starttime" type="text" data-am-datepicker="{format: 'yyyy-mm-dd'}" />
+     <label>截止日期</label>
+    	<input name="endtime" type="text" data-am-datepicker="{format: 'yyyy-mm-dd'}" />
+    	<input type="submit" placeholder="格式例:2014-01-01" value="查询"/>
+    </form>
+    </div>
+	<table class="am-table am-table-striped am-table-bordered am-text-sm am-table-hover">
+		<tr class="am-success">
+			<th>业务员</th>
+			<th>提成金额</th>
+		</tr>
+		<volist name="ReAgreeInfo" id="vo">
+			<tr>
+                <volist name="userinfo" id="uinfo">
+                    <if condition="$uinfo['id'] eq $vo['saler']">
+				        <td><a href="{:U('Fhk/TcDetail','','')}/id/{$vo.id}">{$uinfo.xingming}</a></td>
+                    </if>
+                </volist>
+				<td>{:number_format($vo['tc_sum'],2,'.',',')}</td>
+			</tr>
+		</volist>
+	</table>
+	<div class="fengye">{$page}<div/>
+</div>
+<include file="./Application/Home/View/footer.html" />

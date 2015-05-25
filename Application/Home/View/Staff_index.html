@@ -1,0 +1,62 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+
+<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
+<script>
+	$czmmurl="{:U('Staff/czmm','','')}?sq=";
+</script>
+
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="#">员工信息</a></li>
+		<li class="am-active">列表</li>
+	</ol>
+	
+	<table class="am-table am-table-bordered am-table-striped am-text-sm">
+		<tr class="am-success">
+			<th>员工编号</th>
+			<th>姓名</th>
+			<th>身份证号码</th>
+			<th>部门</th>
+			<th>在职状态</th>
+			<th>入职日期</th>
+			<th>离职日期</th>
+			<th>操作</th>
+		</tr>
+		<volist name="list" id="vo">
+			<tr>
+				<td>{$vo.username}</td>
+				<td>{$vo.xingming}</td>
+				<td>{$vo.sfid}</td>
+				<td><if  condition="$vo.bumeng eq 1 ">总经办
+					<elseif  condition="$vo.bumeng eq 2 "/>风控部
+					<elseif  condition="$vo.bumeng eq 3 "/>财务部
+					<elseif  condition="$vo.bumeng eq 4 "/>技术部
+					<elseif  condition="$vo.bumeng eq 5 "/>市场部
+					<elseif  condition="$vo.bumeng eq 6 "/>客服部
+					</if>
+				</td>
+				<td><if  condition="$vo.status eq 0 ">在职
+					<elseif  condition="$vo.status eq 1 "/>离职
+					<elseif  condition="$vo.status eq 2 "/>试用期
+					</if>
+				</td>
+				<td>{$vo.rzdate|date="Y-m-d",###}</td>
+				<td><if condition="$vo.lzdate eq 0">--
+					<else />{$vo.lzdate|date="Y-m-d",###}
+				</if></td>
+				<td style="text-align: center;">
+					<a href="{:U('Staff/add','','')}?sq={$vo.id}">修改</a>
+					|<a href="#" onclick="firm($czmmurl,{$vo.id},'重置密码')">重置密码</a>
+					|[详细信息]：<a href="{:U('Staff/info_add','','')}?sq={$vo.id}">添加/修改</a>
+					|<a href="{:U('Staff/ViewInfo','','')}/sq/{$vo.id}">查看</a>
+				</td>
+			</tr>
+		</volist>
+	</table>
+	<div class="fengye">{$page}</div>
+	
+
+</div>
+<include file="./Application/Home/View/footer.html" />

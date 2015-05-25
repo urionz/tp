@@ -1,0 +1,59 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<style type="text/css">
+    table *{
+        font-size: 10px;
+        padding: 0px;
+        text-align: center;
+    }
+</style>
+<div class="admin-content">
+    <ol class="am-breadcrumb">
+        <li><a href="{:U('Fhk/TcList','','')}">提成统计</a></li>
+        <li class="am-active">明细</li>
+        <li><a href="{$Think.server.request_uri}/action/export">导出</a></li>
+    </ol>
+    <div class="am-form-group">
+    
+    <form action="{$Think.server.request_uri}" method="post">
+    <label>开始日期</label>
+        <input name="starttime" type="text" data-am-datepicker="{format: 'yyyy-mm-dd'}" />
+     <label>截止日期</label>
+        <input name="endtime" type="text" data-am-datepicker="{format: 'yyyy-mm-dd'}" />
+        <input type="submit" placeholder="格式例:2014-01-01" value="查询"/>
+    </form>
+    </div>
+    <table class="am-table am-table-striped am-table-bordered am-text-sm am-table-hover">
+        <tr class="am-success">
+            <th>合同号</th>
+            <th>期数</th>
+            <th>收款日期</th>
+            <th>提成金额</th>
+            <th>客户名称</th>
+            <th>放款类型</th>
+            <th>结算金额</th>
+            <th>实际利息</th>
+            <th>距离日期</th>
+        </tr>
+        <volist name="outVal" id="vo">
+            <tr>
+                <td><a href="{:U('Fhk/scan','','')}/id/{$vo.agree_num}">{$vo.agree_num}</a></td>
+                <td>{$vo.hk_term}</td>
+                <td>{$vo['receive_date']|date='Y-m-d',###}</td>
+                <td>{$vo['tc_money']}</td>
+                <td>{$vo.cname}</td>
+                <td>
+                    <if condition="$vo['fk_type'] eq 1">信用
+                        <elseif condition="$vo['fk_type'] eq 2" />抵押
+                        <else />担保
+                    </if>
+                </td>
+                <td>{$vo.result_money}</td>
+                <td>{$vo.fac_hx}</td>
+                <td>{:floor(($vo[receive_date]-$vo['hk_date'])/(60*60*24))}</td>
+            </tr>
+        </volist>
+    </table>
+    <div class="fengye">{$page}<div/>
+</div>
+<include file="./Application/Home/View/footer.html" />

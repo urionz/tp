@@ -1,0 +1,98 @@
+﻿.width_xbdcms{
+	width: 1366px;
+}
+
+.width_400{
+	width: 400px;
+	/*margin: 0 auto;*/
+}
+
+.width_500{
+	width: 500px;
+	/*margin: 0 auto;*/
+}
+
+.width_600{
+	width: 600px;
+	/*margin: 0 auto;*/
+}
+
+.width_700{
+	width: 700px;
+	/*margin: 0 auto;*/
+}
+
+.width_800{
+	width: 800px;
+	/*margin: 0 auto;*/
+}
+
+.am-table th{
+	text-align: center;
+}
+
+.am-btn{
+	padding: 0.35em 0.8em;
+}
+
+
+/*分页*/
+.fengye{padding:3px;margin:3px;text-align:center;}
+.fengye a{border:#eee 1px solid;padding:2px 5px;margin:2px;color:#036cb4;text-decoration:none;}
+.fengye a:hover{border:#999 1px solid;color:#666;}
+.fengye a:active{border:#999 1px solid;color:#666;}
+.fengye .current{border:#036cb4 1px solid;padding:2px 5px;font-weight:bold;margin:2px;color:#fff;background-color:#036cb4;}
+.fengye .disabled{border:#eee 1px solid;padding:2px 5px;margin:2px;color:#ddd;}
+
+
+
+/*左侧导航*/
+.admin-sidebar {
+  width: 200px;
+  min-height: 100%;
+  padding: 10px;
+  position:fixed;
+  left:0px;
+  top:50px;
+}
+
+/*右侧内容*/
+.admin-content {
+  width: auto;
+  overflow: hidden;
+  height: 100%;
+  border-left: 1px solid #cecece;
+  border-bottom: 1px solid #cecece;
+  padding:0 15px;
+  margin-left: 200px;
+}
+
+.admin-content ol{
+	margin:15px 0;padding: 3px;border-bottom: 2px solid #cecece;
+}
+
+/*去除边框*/
+.remove-bor-t{
+	border-top: 0;
+}
+.remove-bor-b{
+	border-bottom: 0;
+}
+.remove-bor-l{
+	border-left: 0;
+}
+.remove-bor-r{
+	border-right: 0;
+}
+/*table 下拉*/
+.ulnav div{
+	border-radius:8px; 
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	padding: 5px;
+	margin: 5px 0 0 8px;
+	background:#B8CCE4;
+	position: absolute;
+	display: none;
+}
+/*table 下拉结束*/

@@ -1,0 +1,177 @@
+
+/*
+Dksq_chakan.html
+*/
+#chakan_header{
+	height: 65px;
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#chakan{
+	position: relative;
+	/*border: 1px solid blue;*/
+	width: 1000px;
+	/*height: 500px;*/
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px;
+}
+/*查看页面table表格*/
+.cktable{
+	border-collapse:collapse;
+	width: 1000px;
+}
+.cktable td, .cktable th{
+	border:1px solid black;
+}
+/*查看页面table表格结束*/
+#chakan #top span{
+	font-size: 13px;
+}
+#chakan #top .sp1{
+	margin-left: 5%;
+}
+#chakan #top .sp2{
+	display: block;
+	float: right;
+	margin-top: 5px;
+	margin-right: 70px;
+}
+ table tr th{
+	padding: 5px;
+}
+ table tr td{
+	padding: 8px;
+}
+.mg_top{
+	margin-top: 20px;
+}
+
+
+
+
+
+
+#win{  
+    border:1px #93BCF5 solid;  
+    width : 300px;  
+    height: 200px;   
+    position : absolute;  
+    top : 300px;  
+    left: 650px;    
+    background:#E9EDF4;
+}   
+#title{  
+    background-color : #93BCF5;  
+    color : #666;   
+    padding-left: 3px;  
+}
+#title1{
+	margin-left:130px;
+}
+#cotent{  
+    padding-left : 3px;  
+    padding-top :  5px;
+} 
+#info{
+	width:250px;
+	height:80px;
+	margin: 10px 0 0 20px;
+	resize:none;
+}
+#close{  
+    margin-left: 210px;   
+    cursor: pointer;
+}
+#text1{
+	font-size:16px;
+	border:2px #cdcdcd solid;
+	padding-left:5px;
+	border-color:#9a9a9a #cdcdcd #cdcdcd #9a9a9a;
+	margin:20px 0 5px 55px;
+}
+#em1{
+	font-style:normal;
+	font-size: 15px;
+	margin: 10px 0 0 100px;
+}
+#em2{
+	font-style:normal;
+	font-size: 15px;
+	margin: 10px 0 0 0;
+}
+#btn{
+	text-align: center;
+	font-size: 16px;
+	cursor: pointer;
+	color: #fff;
+	border: 0;
+	background-color: #3ba354;
+	padding: 5px;
+	position: absolute;
+	top:155px;
+	left:130px;
+	width:50px;
+	height:30px;
+}
+#btn:hover{
+	background: #666;
+}
+
+
+#index .groupname{
+	margin: 10px 50px 10px 550px;
+	width:300px;
+	height:30px;
+	font-size: 18px;
+}
+#index .groupinfo{
+	margin: 10px 50px 10px 550px;
+	width:300px;
+	height:80px;
+	font-size: 18px;
+	resize: none;
+}
+#index .ruleForm span{
+	padding: 5px;
+	margin: 10px 50px 10px 550px;
+	background: green;
+	color:white;
+}
+#index .ruleForm .rulebox{
+	width:300px;
+	margin: 10px 50px 0px 550px;
+	padding: 0 5px;
+}
+#index .ruleForm .rulebox em{
+	font-style: normal;
+	float:left;
+}
+#index .ruleForm .rulebox input{
+	float:right;
+}
+#index .ruleForm .addBtn{
+	width:80px;
+	height:30px;
+	margin: 0px 50px 0px 670px;
+	background: green;
+	cursor: pointer;
+}
+#index .ruleForm .addBtn:hover,#index .lr .addBtn:hover{
+	background: #FF6500;
+}
+#index table{
+	margin: auto;
+}
+#index .lr .addBtn{
+	width:80px;
+	height:30px;
+	margin: 0px 50px 0px 400px;
+	background: green;
+	cursor: pointer;
+}
+#index .stafftop,#index .authindex,#index .accesslisttop{
+	width:200px;
+	margin: 0 0 0 207px;
+}

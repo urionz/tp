@@ -1,0 +1,47 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="{:U('Auth/index')}">用户组</a></li>
+		<li>{$group.title}</li>
+		<li class="am-active">成员列表</li>
+	</ol>
+	
+	<div class="width_xbdcms">
+	<div class="am-fr">
+		<a href="{:U('/Home/Auth/accessAdd/sq','','')}/{$group.id}">
+			<button type="button" class="am-btn am-btn-warning am-radius am-btn-xs"><span class="am-icon-plus"></span>添加成员</button>
+		</a>
+	</div>
+	<table class="am-table am-table-bordered am-table-striped am-text-sm ">
+		<tr class="am-text-warning">
+			<th>UID</th>
+			<th>员工编号</th>
+			<th>姓名</th>
+			<th>部门</th>
+			<th>操作</th>
+		</tr>
+		<volist name="list" id="vo">
+			<tr>
+				<td>{$vo.uid}</td>
+				<td>{$vo.username}</td>
+				<td>{$vo.xingming}</td>
+				<td><if  condition="$vo.bumeng eq 1 ">总经办
+					<elseif  condition="$vo.bumeng eq 2 "/>风控部
+					<elseif  condition="$vo.bumeng eq 3 "/>财务部
+					<elseif  condition="$vo.bumeng eq 4 "/>技术部
+					<elseif  condition="$vo.bumeng eq 5 "/>市场部
+					<elseif  condition="$vo.bumeng eq 6 "/>客服部
+					</if>
+				</td>
+				<td>
+					<a href="{:U('Auth/accessSanchu','','')}?u={$vo.uid}&g={$group.id}">删除</a>
+				</td>
+			</tr>
+		</volist>
+	</table>
+	<div class="fengye">{$page}</div>
+	</div>
+</div>
+<include file="./Application/Home/View/footer.html" />

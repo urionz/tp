@@ -1,0 +1,150 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/dksq.css">
+
+<script src="__PUBLIC__/laydate/laydate.js" type="text/javascript" charset="utf-8" ></script>
+<script src="__PUBLIC__/js/addcheck.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/js/am_formyz.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+    $ajaxAddUrl="{:U('Fhk/addAction','','')}/ac/agree"; 
+});
+</script>
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="{:U('Fhk/index','','')}">合同</a></li>
+		<li class="am-active">添加</li>
+	</ol>
+<form action="" method="post" accept-charset="utf-8" class="am-form" data-am-validator>
+<fieldset>
+    <legend>合同信息</legend>
+        <label>业务员：</label>
+        <select name="saler" class="saler" data-am-selected="{searchBox: 1,maxHeight: 200}">
+            <optgroup label="总经办">
+                <volist name="salerList" id='salers'>
+                    <if condition="$salers['bumeng'] eq 01">
+                        <option value="{$salers.id}">{$salers.xingming}</option>
+                    </if>
+                </volist>
+            </optgroup>
+            <optgroup label="风控部">
+                <volist name="salerList" id='salers'>
+                    <if condition="$salers['bumeng'] eq 02">
+                        <option value="{$salers.id}">{$salers.xingming}</option>
+                    </if>
+                </volist>
+            </optgroup>
+            <optgroup label="财务部">
+                <volist name="salerList" id='salers'>
+                    <if condition="$salers['bumeng'] eq 03">
+                        <option value="{$salers.id}">{$salers.xingming}</option>
+                    </if>
+                </volist>
+            </optgroup>
+            <optgroup label="技术部">
+                <volist name="salerList" id='salers'>
+                    <if condition="$salers['bumeng'] eq 04">
+                        <option value="{$salers.id}">{$salers.xingming}</option>
+                    </if>
+                </volist>
+            </optgroup>
+            <optgroup label="市场部">
+                <volist name="salerList" id='salers'>
+                    <if condition="$salers['bumeng'] eq 05">
+                        <option value="{$salers.id}">{$salers.xingming}</option>
+                    </if>
+                </volist>
+            </optgroup>
+            <optgroup label="客服部">
+                <volist name="salerList" id='salers'>
+                    <if condition="$salers['bumeng'] eq 06">
+                        <option value="{$salers.id}">{$salers.xingming}</option>
+                    </if>
+                </volist>
+            </optgroup>
+            <optgroup label="其他">
+            <volist name="salerList" id='salers'>
+                    <if condition="($salers['id'] eq 33) or ($salers['id'] eq 34)">
+                        <option value="{$salers.id}">{$salers.xingming}</option>
+                    </if>
+            </volist>
+            </optgroup>
+        </select>
+        
+
+
+    <div class="am-form-group">
+    <label>合同号：</label>
+    	<input type="text" name="hth" class='hth am-form-field' required />
+    </div>
+
+    <div class="am-form-group">
+    <label>放款金额：</label>
+    	<input type="text" name="fkje" class="fkje am-form-field js-pattern-number" placeholder="纯数字格式" required />
+    </div>
+
+    <div class="am-form-group">
+    <label>放款类型：</label>
+    <select name="fklx" class="fklx" data-am-selected required >
+		<option value="0">请选择</option>
+		<option value="1">信用</option>
+		<option value="2">抵押</option>
+		<option value="3">担保</option>
+        <option value="4">其他</option>
+    </select>
+
+    </div>
+
+    <div class="am-form-group">
+    <label>期限：</label>
+    	<input type="text" name="qx" class="qx am-form-field js-pattern-number" placeholder="纯数字格式" required />
+    </div>
+
+    <div class="am-form-group">
+    <label>利率：</label>
+    	<input type="text" name="lv" class="lv am-form-field js-pattern-lv" placeholder="小数格式" required />
+    </div>
+
+    <div class="am-form-group">
+    <label>放款日期：</label>
+    	<input name="fkdate" type="text" placeholder="格式例:2014-01-01" class="am-form-field js-pattern-date" data-am-datepicker="{format: 'yyyy-mm-dd'}" />
+    </div>
+
+    <div class="am-form-group">
+    <label>还款方式：</label>
+    	<select name="hktype" data-am-selected class="hktype" required >
+			<option value="0">请选择</option>
+			<option value="1">等额本息</option>
+			<option value="2">等本等息</option>
+			<option value="3">到期本息</option>
+			<option value="4">先息后本</option>
+		</select>
+    </div>
+
+    <div class="am-form-group">
+    <label>合同说明项：</label>
+		<textarea name="agreeinfo" maxlength="300" placeholder="可不填"></textarea>
+    </div>
+	
+	<div class="am-form-group">
+	<label>第一期还款日期：</label>
+		<input type="text" name="term_date" data-am-datepicker="{format: 'yyyy-mm-dd'}" placeholder="格式例:2014-01-01" class="am-form-field js-pattern-date"/>
+	</div>
+
+	<div class="am-form-group">
+	<label>客户名称：</label>
+		<input type="text" name="cname" class="cname am-form-field js-pattern-zhongwen" required />
+	</div>
+
+	<div class="am-form-group">
+	<label>客户身份证号码：</label>
+		<input type="text" name="client_card" class="client_card am-form-field js-pattern-idcard" required />
+	</div>
+	<button class="am-btn am-btn-secondary" id="doc-confirm-toggle" type="submit">添加</button>
+</fieldset>
+</form>
+
+</div>
+
+<include file="./Application/Home/View/footer.html" />

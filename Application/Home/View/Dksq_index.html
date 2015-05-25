@@ -1,0 +1,209 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+
+<!--<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/dksq.css">-->
+<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
+<script>
+	$scurl="{:U('Dksq/shanchu','','')}?sq=";
+	$prevurl="{:U('Dksq/prev','','')}/sq/";
+</script>
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="#">贷款申请</a></li>
+		<li class="am-active">列表</li>
+	</ol>
+	
+	<table class="am-table am-table-striped am-table-bordered am-text-sm ">
+		<tr class="am-success" >
+			<th>申请编号<a href="{:U('Dksq/index','','')}?order=sqid&stu=1"title="升序"><span class="am-icon-sort-amount-asc"></span></a>
+				<a href="{:U('Dksq/index','','')}?order=sqid&stu=2"title="降序"><span class="am-icon-sort-amount-desc"></span></a>
+			</th>
+			<th>申请人</th>
+			<th>类型</th>
+			<th>申请额度</th>
+			<th>贷款期限</th>
+			<th>贷款用途</th>
+			<!--<th>信息来源</th>-->
+			<th>申请日期<a href="{:U('Dksq/index','','')}?order=sqdate&stu=1"title="升序"><span class="am-icon-sort-amount-asc"></span></a>
+				<a href="{:U('Dksq/index','','')}?order=sqdate&stu=2"title="降序"><span class="am-icon-sort-amount-desc"></span></a>
+			</th>
+			<th>添加人</th>
+			<th>添加时间</th>
+			<th>还款情况</th>
+			<th>审批结果</th>
+			<th>审批额度</th>
+			<th>审批期限</th>
+			<th>操作</th>
+		</tr>
+		<volist name="list" id="vo">
+			<tr>
+				<td>{$vo.sqid}</td>
+				<td>{$vo.xingming}</td>
+				<td><if  condition="$vo.sqtype eq 1 ">薪金贷(无房产)
+					<elseif  condition="$vo.sqtype eq 2 "/>薪金贷(有房产)
+					<elseif  condition="$vo.sqtype eq 3 "/>企业贷(无房产)
+					<elseif  condition="$vo.sqtype eq 4 "/>房易贷
+					<elseif  condition="$vo.sqtype eq 5 "/>车易贷
+					<elseif  condition="$vo.sqtype eq 6 "/>企业贷(有房产)
+					</if>
+				</td>
+				<td>{$vo.sqje}</td>
+				<td>{$vo.qixian}</td>
+				<td>{$vo.yongtu}</td>
+				<!--<td>{$vo.laiyuan}</td>-->
+				<td><if condition='$vo.sqdate eq 0'>--<else />
+					{$vo.sqdate|date="Y-m-d",###}</if>
+				</td>
+				<td>{$vo.luruxingming}</td>
+				<td>{$vo.lurutime|date="Y-m-d H:i",###}</td>
+				<td>
+					<if condition='$vo.hkstatus eq 0' >--
+					<elseif condition='$vo.hkstatus eq 1' />正常
+					<elseif condition='$vo.hkstatus eq 2' />逾期30天内
+					<elseif condition='$vo.hkstatus eq 3' />逾期30-60天内
+					<elseif condition='$vo.hkstatus eq 4' />逾期超过60天
+					</if>
+				</td>
+				<td>
+					<if condition='$vo.result eq 0'>待审批
+						<elseif condition='$vo.result eq 1' />通过
+						<else />未通过
+					</if>
+				</td>
+				<td>
+					<if condition="$vo.result eq 1" >{$vo.prevlimit}(万)
+					<elseif condition='$vo.result eq 0'/>--
+					<else />--
+					</if>
+				</td>
+				<td>
+					<if condition="$vo.result eq 1">{$vo.pretime}(月)
+						<elseif condition='$vo.result eq 0'/>--
+						<else />--
+					</if>
+				</td>
+				<td>
+                    <a href="{:U('Dksq/chakan','','')}?sq={$vo.id}"><button class="am-btn am-btn-xs am-btn-default am-text-primary" title="查看"><span class="am-icon-file-text-o"></span></button></a>
+                    <a href="{:U('Dksq/add','','')}?sq={$vo.id}"><button class="am-btn am-btn-xs am-btn-default am-text-success" title="修改"><span class="am-icon-edit"></span></button></a>
+                    <a href="#" onclick="firm($scurl,{$vo.id},'删除')"><button class="am-btn am-btn-xs am-btn-default am-text-danger" title="删除"><span class="am-icon-trash-o"></span></button></a>
+                    <!--<if condition="$vo.result eq 0">
+                    <a href="javascript:;" name="prevLink" id="prevLink" onclick="prev({$vo.id})"><button class="am-btn am-btn-xs am-btn-default am-text-secondary">审批</button></a>
+                  	</if>-->
+                  	<if condition="$vo.result eq 0">
+                  	<button class="am-btn am-btn-xs am-btn-default am-text-secondary myjs-daikuanshenpi" id="{$vo.id}">审批</button>
+                  	</if>
+				</td>
+			</tr>
+		</volist>
+	</table>
+	<div class="fengye">{$page}</div>
+	
+</div>
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+	<div class="am-modal-dialog">
+	<div class="am-modal-hd am-text-success">贷款审批</div>
+     <div class="am-modal-bd">
+	   <p id="p123"></p>
+	   <input type="text" class="am-modal-prompt-input" placeholder="审批额度(万)" id="input1">
+	   <input type="text" class="am-modal-prompt-input" placeholder="审批期限(月)" id="input2">
+		 <input type="radio" checked="checked" name="prevCheck" value="1" id="yescheck"/>通过
+		 <input type="radio" name="prevCheck" value="2" id="nocheck"/>不通过
+	 </div>
+	 
+	 <div class="am-modal-footer">
+	      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+	      <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+	 </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function() {
+	$("#nocheck").on('click',function() {
+		$("#input1,#input2").attr("disabled","disabled");
+	});
+	$("#yescheck").on('click',function() {
+		$("#input1,#input2").removeAttr("disabled");
+	});
+	
+	
+	
+  $('.myjs-daikuanshenpi').on('click', function() {
+  	var sqid = $(this).attr('id');//获取申请id
+  	
+  	var sqbianhao = $(this).parents("td").prevAll(":eq(12)").html();
+  	var sqren = $(this).parents("td").prevAll(":eq(11)").html();
+  	$("#p123").text(sqbianhao + '(' + sqren + ')');//申请编号+申请人
+  	
+  	$('#my-prompt').prepend('<input type="hidden" name="sqid" value="" id="qweeed">');
+  	$("#qweeed").val(sqid);
+  	
+    $('#my-prompt').modal({
+      relatedTarget: this,
+      onConfirm: function(e) {
+      	var sq = $("#qweeed").val();
+      	var prevLimit = e.data[0];
+      	var deadLine = e.data[1];
+      	var checkValue = $("input[name='prevCheck']:checked").val();
+      	if(checkValue!=2){
+			if(prevLimit==''){
+				alert('请设置审批额度!');
+				return false;
+			}
+			else if(deadLine==''){
+				alert('请设置审批期限!');
+				return false;
+			}
+		}
+			$.post($prevurl+sq,{prevLimit:prevLimit,checkValue:checkValue,deadLine:deadLine},function(data){
+				var sqid=data.sqid;
+				var prevLimit=data.prevlimit;
+				var deadLine=data.pretime;
+				var result=data.result;
+				var hkstatus=data.hkstatus;
+				var status=data.status;
+				
+				var spqx=data.spqx;//审批权限
+				if(spqx == 0){
+					alert("无审批权限");
+					$(this).modal('close');
+				}
+				
+				if(status)
+				{
+					if(result==1)
+					{
+						$('td:contains('+sqid+')').nextAll(":eq(9)").html("通过");
+						$('td:contains('+sqid+')').nextAll(":eq(10)").html(prevLimit+"(万)");
+						$('td:contains('+sqid+')').nextAll(":eq(11)").html(deadLine+"(月)");
+						$('td:contains('+sqid+')').nextAll().children(":eq(3)").hide();
+					}
+					if(result==2)
+					{
+						$('td:contains('+sqid+')').nextAll(":eq(9)").html("未通过");
+						$('td:contains('+sqid+')').nextAll().children(":eq(3)").hide();
+					}
+					$(this).modal('close');
+				}
+				else{
+					$(this).modal('close');
+				}
+				
+			});
+			
+      },
+     
+    });
+    
+  });
+  
+//Confirm 关闭后移除暂存的实例，再次调用时重新初始化
+  $('#my-prompt').on('closed.modal.amui', function() {
+  	$(this).removeData('am.modal');
+  });
+});
+</script>
+
+<include file="./Application/Home/View/footer.html" />

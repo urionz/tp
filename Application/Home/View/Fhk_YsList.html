@@ -1,0 +1,85 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<style type="text/css">
+	table *{
+		font-size: 10px;
+		padding: 0px;
+		text-align: center;
+	}
+</style>
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="{:U('Fhk/YsList','','')}">应收清单</a></li>
+		<li class="am-active">列表</li>
+		<li><a href="{:U('Fhk/YsDetail')}">明细</a></li>
+		<li><a href="{:U('Fhk/YsList','','')}/action/export">导出</a></li>
+	</ol>
+
+	<table class="am-table am-table-striped am-table-bordered am-text-sm am-table-hover">
+		<tr class="am-success">
+			<th>合同号</th>
+			<th>客户名称</th>
+			<th>逾期均时</th>
+			<th>最长逾期</th>
+			<th>总应收金额</th>
+			<th>合同金额</th>
+			<th>一周内金额</th>
+			<th>逾1月内</th>
+			<th>逾3月内</th>
+			<th>逾3月外</th>
+			<th>一周内比</th>
+			<th>1月内比</th>
+			<th>3月内比</th>
+			<th>3月外比</th>
+			<th>总逾利息</th>
+			<th>总逾本金</th>
+			<th>计算罚息</th>
+		</tr>
+		
+		<volist name="out" id="vo">
+				<tr>
+					<td><a href="{:U('Fhk/scan','','')}/id/{$vo.agree_num}">{$vo['agree_num']}</a></td>
+					<td>{$vo.cname}</td>
+					<td>{:floor($vo['Yqjs'])}</td>
+					<td>{$vo['MaxTime']}</td>
+					<td>{:number_format($vo['ResultMoney'],2,'.',',')}</td>
+					<td>{:number_format($vo['agree_hk'],2,'.',',')}</td>
+					<td>{:number_format($vo['OneWeek'],2,'.',',')}</td>
+					<td>{:number_format($vo['OneMonth'],2,'.',',')}</td>
+					<td>{:number_format($vo['ThreeMonth'],2,'.',',')}</td>
+					<td>{:number_format($vo['OutOfThreeMonth'],2,'.',',')}</td>
+					<td>{$vo.OneWeekZb}</td>
+					<td>{$vo.OneMonthZb}</td>
+					<td>{$vo.ThreeMonthZb}</td>
+					<td>{$vo.OutOfThreeMonthZb}</td>
+					<td>{:number_format($vo['Lx'],2,'.',',')}</td>
+					<td>{:number_format($vo['Bj'],2,'.',',')}</td>
+					<td>{:number_format($vo['CalcFx'],2,'.',',')}</td>
+				</tr>
+		</volist>
+		<if condition="$Sum['CCount'] neq 0">
+			<tr>
+				<td>统计：{$Sum['CCount']}</td>
+				<td>{$Sum['CCount']}</td>
+				<td>--</td>
+				<td>--</td>
+				<td>{:number_format($Sum['ResultMoneySum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['agree_hkSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['OnyWeekSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['OnyMonthSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['ThreeMonthSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['OutOfThreeMonthSum'],2,'.',',')}</td>
+				<td>{:round($Sum['OnyWeekSum']/$Sum['ResultMoneySum']*100,2).'%'}</td>
+				<td>{:round($Sum['OnyMonthSum']/$Sum['ResultMoneySum']*100,2).'%'}</td>
+				<td>{:round($Sum['ThreeMonthSum']/$Sum['ResultMoneySum']*100,2).'%'}</td>
+				<td>{:round($Sum['OutOfThreeMonthSum']/$Sum['ResultMoneySum']*100,2).'%'}</td>
+				<td>{:number_format($Sum['LxSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['BjSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['CalcFxSum'],2,'.',',')}</td>
+			</tr>
+		</if>
+	</table>
+	<div class="fengye">{$page}<div/>
+</div>
+<include file="./Application/Home/View/footer.html" />

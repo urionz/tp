@@ -1,0 +1,61 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
+<div class="admin-content">
+<ol class="am-breadcrumb">
+        <li><a href="{:U('User/getMail')}">收件信箱</a></li>
+        <li class="am-active">列表</li>
+</ol>
+<form action="{:U('User/MessageDelAction','','')}" method="post" accept-charset="utf-8">
+<table class="am-table am-table-striped am-table-bordered am-table-hover am-text-sm" style="text-align: center;">
+    <tr class="am-success">
+    <if condition="!empty($message)">
+        <th>
+            <label class="am-checkbox am-secondary">
+                <input type="checkbox" id="checkAll" name="select_all" data-am-ucheck>全选
+            </label>
+        </th>
+    </if>
+        <th>短信标题</th>
+        <th>发件人</th>
+        <th>发送时间</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    <volist name="message" id="vo">
+    <tr>
+        <td>
+            <label class="am-checkbox am-secondary">
+                <input type="checkbox" value="{$vo.id}" name="ids[]" data-am-ucheck>
+            </label>
+        </td>
+        <td>{$vo.title}</td>
+        <td>
+            <volist name="UserInfo" id="v">
+                    <if condition="$vo['postid'] eq $v['id']">
+                       {$v.xingming}
+                    </if>
+            </volist>
+        </td>
+        <td><if condition="!empty($vo['posttime'])">{$vo.posttime|date="Y-m-d h:i:s",###}</if></td>
+        <td>
+            <if condition="$vo.status eq 0">
+                <b style="color:red;font-weight:normal;">未读</b>
+                <else />
+                <b style="color:green;font-weight:normal;">已读</b>
+            </if>
+        </td>
+        <td>
+            <a class="am-icon-search" title="阅读" href="{:U('User/scanMessage','','')}/id/{$vo.id}"></a>&nbsp;&nbsp;&nbsp;
+            <a href="{:U('User/MessageDelAction','','')}/id/{$vo.id}" class="am-icon-trash" title="删除" >
+        </td>
+    </tr>
+    </volist>
+</table>
+<if condition="!empty($message)">
+    <button type="submit" id="trash" class="am-icon-trash am-icon-sm am-topbar-left" title="清空全部"></button>
+</if>
+</form>
+<div class="fengye">{$page}</div>
+</div>
+<include file="./Application/Home/View/footer.html" />

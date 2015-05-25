@@ -1,0 +1,27 @@
+#output{
+    position:absolute;
+    right:1056px;
+    width:180px;
+    background: rgba(0,0,0,0.3);
+    max-height:130px;
+    overflow:auto;
+}
+#output ul{
+    margin: 0 auto;
+    max-width:163px;
+    list-style-type: none;
+
+}
+#output ul li{
+    max-width:163px;
+    margin: 0px;
+}
+.hovered{
+    background: gray;
+    cursor:pointer;
+}
+
+.hover:hover{
+    background: gray;
+    cursor:pointer;
+}

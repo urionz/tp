@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="description" content="">
+  	<meta name="keywords" content="">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  	<meta name="renderer" content="webkit">
+  	<meta http-equiv="Cache-Control" content="no-siteapp"/>
+  		
+	<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/am2.1.0/js/amazeui.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="__PUBLIC__/am2.1.0/css/amazeui.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/my.css"/>
+	<title>迅泊达内容管理系统</title>
+</head>
+
+<body>
+<!--[if lte IE 9 ]><div class="am-alert am-alert-danger ie-warning" data-am-alert>
+  <div class="am-container" style="font-size:18px;">提醒：你的浏览器太古董了，请使用IE9以上浏览器；360浏览器请使用极速模式！</div>
+</div><![endif]-->
+<header class="am-topbar am-topbar-fixed-top">
+	<div class="am-fl" style="line-height: 45px;margin:0 15px;">
+      <img src="__PUBLIC__/img/xbd.png" style="height: 20px;"/>
+    </div>
+  <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+    <ul class="am-nav am-nav-pills am-topbar-nav">
+      <li <if condition="$daohang eq index ">class="am-active am-animation-shake"</if>><a href="{:U('Index/index')}"><span class="am-icon-home"></span>首页</a></li>
+      <li <if condition="$daohang eq dksq ">class="am-active am-animation-shake"</if>><a href="{:U('Dksq/index')}">贷款申请管理</a></li>
+      <li <if condition="$daohang eq staff ">class="am-active am-animation-shake"</if>><a href="{:U('Staff/index')}">员工信息管理</a></li>
+      <li <if condition="$daohang eq borrow ">class="am-active am-animation-shake"</if>><a href="{:U('Borrow/index')}">发标信息管理</a></li>
+      <li <if condition="$daohang eq auth ">class="am-active am-animation-shake"</if>><a href="{:U('Auth/index')}">权限管理</a></li>
+      <li <if condition="$daohang eq fhk ">class="am-active am-animation-shake"</if>><a href="{:U('Fhk/index')}">放还款管理</a></li>
+    </ul>
+
+    <div class="am-topbar-right am-margin-right-lg">
+      <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
+        <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle" data-am-dropdown-toggle>
+        	{$user.xingming} <span class="am-icon-caret-down"></span>
+        </button>
+        <ul class="am-dropdown-content">
+          <li><a href="{:U('User/Manage')}">修改密码</a></li>
+          <li><a href="{:U('Login/tuichu')}">退出</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+    <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
+     <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle" data-am-dropdown-toggle>
+          <span <if condition="$MessageCount neq 0">class="am-icon-envelope-o"</if>></span> 站内信箱 </span><span class="am-icon-caret-down"></span>
+     </button>
+     <ul class="am-dropdown-content">
+        <li>
+          <a href="{:U('User/getMail')}" >收件信箱&nbsp;&nbsp;&nbsp;
+            <if condition="$MessageCount neq 0">
+              <span class="am-icon-envelope-o">+{$MessageCount}</span>
+            </if>
+          </a>
+        </li>
+        <li><a href="{:U('User/postMail')}">发件信箱</a></li>
+        <li><a href="{:U('User/MessageSend')}">发送内信</a></li>
+        <li><a href="{:U('User/Message')}">信息中心</a></li>
+      </ul>
+    </div>
+    </div>
+  </div>
+</header>
+
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+  <a href="#top" title="回到顶部">
+    <span class="am-gotop-title">回到顶部</span>
+    <i class="am-gotop-icon am-icon-chevron-up"></i>
+  </a>
+</div>

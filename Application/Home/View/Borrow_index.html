@@ -1,0 +1,87 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="#">发标信息</a></li>
+		<li class="am-active">列表</li>
+	</ol>
+	总金额：￥{$sumAccount}
+	<div class="am-panel am-panel-default">
+	<table class="am-table am-table-striped am-table-bordered am-text-sm ">
+		<tr class="am-text-success" >
+			<th>编号<a href="{:U('Borrow/index','','')}?order=id&stu=1"title="升序"><span class="am-icon-sort-amount-asc"></span></a>
+				<a href="{:U('Borrow/index','','')}?order=id&stu=2"title="降序"><span class="am-icon-sort-amount-desc"></span></a>
+			</th>
+			<th>借款用途</th>
+			<th>金额</th>
+			<th>年利率</th>
+			<th>借款期限</th>
+			<th>发标时间</th>
+			<th>复审日期</th>
+			<th>担保</th>
+			<th>抵押</th>
+			<th>还款方式</th>
+			
+			<!--<th>投标次数</th>-->
+			
+			<th>添加时间</th>
+			<!--<th>isday</th>
+			<th>天数</th>-->
+			<th>用户名</th>
+			<th>姓名</th>
+			<th>身份证号码</th>
+			
+		</tr>
+		<volist name="list" id="vo">
+			<tr>
+				<td>{$vo.id}</td>
+				<td>{$vo.name}</td>
+				<td>￥{$vo.account}</td>
+				<td>{$vo.apr}%</td>
+				<td><if  condition="$vo.isday eq 1 ">
+					{$vo.time_limit_day}天
+					<else/>{$vo.time_limit}个月</if>
+				</td>
+				<td><if condition="$vo.verify_time eq 0">--
+					<else />{$vo.verify_time|date="Y-m-d H:i",###}</if>
+				</td>
+				<td><if condition="$vo.repayment_time eq 0">--
+					<else />{$vo.repayment_time|date="Y-m-d",###}</if>
+				</td>
+				<td><if  condition="$vo.use eq 248 "><span class="am-icon-check"></span>黑羊
+					<elseif condition="$vo.use eq 249 "/><span class="am-icon-check"></span>承诚
+					<elseif condition="$vo.use eq 508 "/><span class="am-icon-check"></span>天诚
+					<elseif condition="$vo.use eq 250 "/><span class="am-icon-check"></span>
+					<else/><span class="am-icon-close"></span>
+					</if>
+				</td>
+				<td><if  condition="$vo.is_fast eq 1 "><span class="am-icon-check"></span>
+					<else/><span class="am-icon-close"></span>
+					</if>
+				</td>
+				<td><if  condition="$vo.isday eq 1 ">到期全额还款
+					<elseif condition="$vo.style eq 3 "/>按月付息到期还本
+					<else/>按月分期
+					</if>
+				</td>
+				
+				<!--<td>{$vo.tender_times}次</td>-->
+				
+				<td><if condition="$vo.addtime eq 0">--
+					<else />{$vo.addtime|date="Y-m-d H:i",###}</if>
+				</td>
+				<!--<td>{$vo.isday}</td>
+				<td>{$vo.time_limit_day}</td>-->
+				<td>{$vo.username}</td>
+				<td>{$vo.card_id}</td>
+				<td>{$vo.realname}</td>
+			</tr>
+		</volist>
+	</table>
+	<div class="fengye">{$page}</div>
+	</div>
+
+</div>
+
+<include file="./Application/Home/View/footer.html" />

@@ -1,0 +1,121 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<script type="text/javascript">
+	$(function(){
+				$('.ulnav').each(function(){
+					$(this).mousemove(function(){
+						$(this).children().show();
+					});
+					$(this).mouseleave(function(){
+						$(this).children().hide();
+					});
+				});
+	});
+</script>
+<style type="text/css">
+	table *{
+		font-size: 10px;
+		padding: 0px;
+		text-align: center;
+	}
+</style>
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="{:U('Fhk/clientView','','')}">客户账款</a></li>
+		<li class="am-active">列表</li>
+		<li><a href="{:U('Fhk/clientView','','')}/action/export">导出</a></li>
+	</ol>
+	<form action="{:U('Fhk/clientView')}" method="post">
+    <span>查找姓名：</span>
+    	<input name="target" type="text"/>
+    	<input type="submit" value="查询"/>
+    </form>
+    <br/>
+	<table class="am-table am-table-striped am-table-bordered am-text-sm am-table-hover">
+		<tr class="am-success">
+			<th>合同号</th>
+			<th>客户名称</th>
+			<th>业务员</th>
+			<th>
+				结算金额
+				<a href="{:U('Fhk/clientView','','')}/order/ResultMoney/role/asc" title="升序">
+					<span class="am-icon-sort-amount-asc"></span>
+				</a>
+				<a href="{:U('Fhk/clientView','','')}/order/ResultMoney/role/desc" title="降序">
+					<span class="am-icon-sort-amount-desc"></span>
+				</a>
+			</th>
+			<th>合同还款</th>
+			<th>提前去息</th>
+			<th>违约金</th>
+			<th>罚息</th>
+			<th>已还金额</th>
+			<th>已还比</th>
+			<th>还款均时</th>
+			<th>应收金额</th>
+			<th>应收比</th>
+			<th>逾期均时</th>
+			<th>待收金额</th>
+			<th>待收比</th>
+			<th>到期均时</th>
+		</tr>
+		<volist name="out" id="vo">
+			<tr>
+				<td><a href="{:U('Fhk/scan','','')}/id/{$vo.agree_num}">{$vo.agree_num}</a></td>
+				<td>{$vo.cname}</td>
+				<volist name="userinfo" id="uinfo">
+					<if condition="$uinfo['id'] eq $vo['saler']">
+						<td>{$uinfo.xingming}</td>
+					</if>
+				</volist>
+				<td>{:number_format($vo['ResultMoney'],2,'.',',')}</td>
+				<td>{:number_format($vo['AgreeHk'],2,'.',',')}</td>
+				<td>{:number_format($vo['Tqqx'],2,'.',',')}</td>
+				<td>{:number_format($vo['Wyj'],2,'.',',')}</td>
+				<td>{:number_format($vo[Fx],2,'.',',')}</td>
+				<td>{:number_format($vo['YhJe'],2,'.',',')}</td>
+				<td>{$vo.Yhzb}</td>
+				<td>{:floor($vo['HkJs'])}</td>
+				<td>{:number_format($vo['YsJe'],2,'.',',')}</td>
+				<td>{$vo.Yszb}</td>
+				<td>{:floor($vo['YsJs'])}</td>
+				<td>{:number_format($vo['DsJe'],2,'.',',')}</td>
+				<td>{$vo.Dszb}</td>
+				<td>{:floor($vo['DsJs'])}</td>
+			</tr>
+		</volist>
+		<if condition="$Sum['CCount'] neq 0">
+			<tr>
+				<td>统计：{$Sum['CCount']}</td>
+				<td>{$Sum.CCount}</td>
+				<td class="ulnav">浏览..
+					<div class="hide">
+					<volist name="SaCount" id="sa">
+						<volist name="userinfo" id="uinfo">
+							<if condition="$uinfo['id'] eq $sa['saler']">
+								{$uinfo.xingming}：{$sa.count}<br/>
+							</if>
+						</volist>
+					</volist>
+					</div>
+				</td>
+				<td>{:number_format($Sum['ResultMoneySum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['AgreeHkSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['TqqxSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['WyjSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['FxSum'],2,'.',',')}</td>
+				<td>{:number_format($Sum['YhJe'],2,'.',',')}</td>
+				<td>{:round($Sum['YhJe']/$Sum['ResultMoneySum']*100,2).'%'}</td>
+				<td>{:floor($Sum['HkJsSum'])}</td>
+				<td>{:number_format($Sum['YsJe'],2,'.',',')}</td>
+				<td>{:round($Sum['YsJe']/$Sum['ResultMoneySum']*100,2).'%'}</td>
+				<td>{:floor($Sum['YsJsSum'])}</td>
+				<td>{:number_format($Sum['DsJe'],2,'.',',')}</td>
+				<td>{:round($Sum['DsJe']/$Sum['ResultMoneySum']*100,2).'%'}</td>
+				<td>{:floor($Sum['DsJsSum'])}</td>
+			</tr>
+		</if>
+	</table>
+	<div class="fengye">{$page}<div/>
+</div>
+<include file="./Application/Home/View/footer.html" />

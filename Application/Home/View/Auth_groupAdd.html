@@ -1,0 +1,47 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+
+<script type="text/javascript" src="__PUBLIC__/js/check.js"></script>
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="#">用户组</a></li>
+		<li class="am-active">添加</li>
+	</ol>
+	<div class="width_xbdcms">
+	<form action="{:U('Auth/groupAdd')}" method="post" class="am-form">
+		<div class="width_500 am-fl">
+			<div class="am-form-group">
+	      		<label>用户组名</label>
+	     		<input type="text" name="groupname" class="groupname" placeholder="请输入用户组名称" />
+	    	</div>
+    		<div class="am-form-group">
+      			<label for="doc-ta-1">用户组描述</label>
+      			<textarea class="" name="info" rows="5" id="doc-ta-1"></textarea>
+    		</div>
+		</div>
+		
+		<div class="width_800 am-fr">
+		<table class="am-table am-table-bordered am-table-striped am-text-sm ">
+			<tr class="am-text-warning">
+				<td>是否拥有</td>
+				<td>权限名称</td>
+				<td>权限说明</td>
+			</tr>
+			<volist name="rules" id="vo">
+			<tr>
+				<td><input type="checkbox" name="rulesbox[]" value="{$vo.id}"/></td>
+				<td>{$vo.title}</td>
+				<td>{$vo.info}</td>
+			</tr>
+			</volist>
+		</table>
+		</div>
+		
+		<div>
+			<input type="submit" name="addBtn" value="添　　加" class="am-btn am-btn-default"/>
+		</div>
+	</form>
+	</div>
+</div>
+<include file="./Application/Home/View/footer.html" />

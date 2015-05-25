@@ -1,0 +1,106 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="{:U('Fhk/HzList','','')}">坏账清单</a></li>
+		<li class="am-active">列表</li>
+	</ol>
+
+	<table class="am-table am-table-striped am-table-bordered am-text-sm " style="text-align: center;">
+		<tr class="am-success">
+			<th>合同号</th>
+			<th>客户名称</th>
+			<th>合同金额</th>
+			<th>结算金额</th>
+			<th>坏账金额</th>
+			<th>坏账比例</th>
+			<th>待收比例</th>
+			<th>应收比例</th>
+			<th>已收比例</th>
+			<th>坏账本金</th>
+			<th>坏账利息</th>
+		</tr>
+		<volist name="AgreeInfo" id="vo">
+		<tr>
+			<td><a href="{:U('Fhk/scan','','')}/id/{$vo.agree_num}">{$vo.agree_num}</a></td>
+			<td>{$vo.cname}</td>
+			<td>{:number_format($vo['fk_money'],2,'.',',')}</td>
+			<td>
+				<php>
+					$FkTj+=$vo['fk_money'];
+					$ReMSum=0;
+					$HzSum=0;
+					$HzbjSum=$HzlxSum=0;
+					$DsReMSum=0;
+					$DsHzSum=0;
+					$YsReMSum=0;
+					$YsHzSum=0;
+					$YiSReMSum=0;
+					$YiSHzSum=0;
+					foreach($ClientAgreeInfo as $v)
+					{
+						if($v['agree_num']==$vo['agree_num'])
+						{
+							$ReMSum+=$v['result_money'];
+							$ReMTj+=$v['result_money'];
+							$HzSum+=($v['hz_bj']+$v['hzlx']);
+							$HzTj+=($v['hz_bj']+$v['hzlx']);
+							$HzbjSum+=$v['hz_bj'];
+							$HzbjTj+=$v['hz_bj'];
+							$HzlxSum+=$v['hzlx'];
+							$HzlxTj+=$v['hzlx'];
+							if(empty($v['receive_date']))
+							{
+								if(time() < $v['hk_date'])
+								{
+									$DsReMSum+=$v['result_money'];
+									$DsReMTj+=$v['result_money'];
+									$DsHzSum+=($v['hz_bj']+$v['hzlx']);
+									$DsHzTj+=($v['hz_bj']+$v['hzlx']);
+								}
+								if(time() > $v['hk_date'])
+								{
+									$YsReMSum+=$v['result_money'];
+									$YsReMTj+=$v['result_money'];
+									$YsHzSum+=($v['hz_bj']+$v['hzlx']);
+									$YsHzTj+=($v['hz_bj']+$v['hzlx']);
+								}
+							}
+							if(!empty($v['receive_date']))
+							{
+								$YiSReMSum+=$v['result_money'];
+								$YiSReMTj+=$v['result_money'];
+								$YiSHzSum+=($v['hz_bj']+$v['hzlx']);
+								$YiSHzTj+=($v['hz_bj']+$v['hzlx']);
+							}
+						}
+					}
+				</php>
+				{:number_format($ReMSum,2,'.',',')}
+			</td>
+			<td>{:number_format($HzSum,2,'.',',')}</td>
+			<td>{:round($HzSum/$ReMSum*100,2).'%'}</td>
+			<td>{:round($DsHzSum/$DsReMSum*100,2).'%'}</td>
+			<td>{:round($YsHzSum/$YsReMSum*100,2).'%'}</td>
+			<td>{:round($YiSHzSum/$YiSReMSum*100,2).'%'}</td>
+			<td>{:number_format($HzbjSum,2,'.',',')}</td>
+			<td>{:number_format($HzlxSum,2,'.',',')}</td>
+		</tr>
+		</volist>
+		<tr>
+			<td>统计：</td>
+			<td>{$CCount}</td>
+			<td>{:number_format($FkTj,2,'.',',')}</td>
+			<td>{:number_format($ReMTj,2,'.',',')}</td>
+			<td>{:number_format($HzTj,2,'.',',')}</td>
+			<td>{:round($HzTj/$ReMTj*100,2).'%'}</td>
+			<td>{:round($DsHzTj/$DsReMTj*100,2).'%'}</td>
+			<td>{:round($YsHzTj/$YsReMTj*100,2).'%'}</td>
+			<td>{:round($YiSHzTj/$YiSReMTj*100,2).'%'}</td>
+			<td>{:number_format($HzbjTj,2,'.',',')}</td>
+			<td>{:number_format($HzlxTj,2,'.',',')}</td>
+		</tr>
+	</table>
+	<div class="fengye">{$page}<div/>
+</div>
+<include file="./Application/Home/View/footer.html" />

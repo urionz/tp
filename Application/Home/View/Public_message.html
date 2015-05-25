@@ -1,0 +1,87 @@
+<include file="./Application/Home/View/header.html" />
+<style type="text/css">
+	#message {
+		width: 470px;
+		height: 260px;
+		border: 10px solid #EFEFEF;
+		margin: 0 auto;
+		position: relative;
+		top: 100px;
+	}
+	#title{
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 35px;
+		width: 470px;
+		background-color: #94A9BE;
+		text-align: center;
+		color: #FFFFFF;
+		line-height: 35px;
+	}
+	#present{
+		position: absolute;
+		top: 80px;
+		left: 0;
+		width: 470px;
+		text-align: center;
+		font-size: 18px;
+		color: red;
+	}
+	#jump{
+		position: absolute;
+		top: 150px;
+		right: 20px;
+		height: 35px;
+		width: 100px;
+		background-color: #DBEAF9;
+		text-align: center;
+		line-height: 35px;
+	}
+	#waitSecond{
+		position: absolute;
+		top: 200px;
+		left: 40px;
+		height: 35px;
+		line-height: 35px;
+		font-size: 12px;
+	}
+	#wait{
+		color: red;
+	}
+</style>
+<div id="message">
+	<div id="title">
+		{$msgTitle}
+	</div>
+	<div id="present">
+		<present name="message">
+			<p class="success">
+				{$message}
+			</p>
+			<else/>
+			<p class="error">
+				{$error}
+			</p>
+		</present>
+	</div>
+	<div id="jump">
+		<a id="href" href="{$jumpUrl}">返　回</a>
+	</div>
+	<div id="waitSecond">
+		<span id="wait">{$waitSecond}</span>秒后自动返回
+	</div>		
+		
+	<script type="text/javascript">
+		(function() {
+			var wait = document.getElementById('wait'), href = document.getElementById('href').href;
+			var interval = setInterval(function() {
+				var time = --wait.innerHTML;
+				if (time <= 0) {
+					location.href = href;
+					clearInterval(interval);
+				};
+			}, 1000);
+		})();
+	</script>
+</div>

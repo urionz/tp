@@ -1,0 +1,78 @@
+<div class="admin-sidebar">
+<div class="am-panel am-panel-default">
+<div class="am-panel-bd">
+<!--首页-->
+<if condition="$daohang eq index ">
+	<p><span class="am-icon-bookmark"></span> 公告</p>
+    <p>信泊四海 诚达天下</p>
+<!--员工信息-->
+<elseif condition="$daohang eq staff " />
+   <ul class="am-nav">
+	<li <if condition="$daohang2 eq staff_index ">class="am-active"</if>><a href="{:U('Staff/index')}">员工信息</a></li>
+	<li><a href="{:U('Staff/add')}" class="am-text-warning am-margin-left-lg"><span class="am-icon-plus"></span>添加</a></li>
+	<li class="am-nav-divider"></li>
+	<li <if condition="$daohang2 eq staff_ulog ">class="am-active"</if>><a href="{:U('Staff/ulog')}">操作日志</a></li>
+   </ul>
+<!--贷款申请-->
+<elseif condition="$daohang eq dksq " />
+	<ul class="am-nav">
+		<li <if condition="$daohang2 eq dksq_index ">class="am-active"</if>>
+			<a href="{:U('Dksq/index')}">贷款申请</a>
+		</li>
+		<li><a href="{:U('Dksq/add')}" class="am-text-warning am-margin-left-lg"><span class="am-icon-plus"></span>添加</a></li>
+		<li><a href="{:U('Dksq/match')}" class="am-text-warning am-margin-left-lg"><span class="am-icon-search"></span>匹配</a></li>
+		<li class="am-nav-divider"></li>
+		<li <if condition="$daohang2 eq dksq_sqrlist ">class="am-active"</if>>
+			<a href="{:U('Dksq/sqrlist')}">申请人列表</a>
+		</li>
+    </ul>
+<!--发标信息-->   
+<elseif condition="$daohang eq borrow " />
+	<ul class="am-nav">
+	<li class="am-active"><a href="{:U('Borrow/index')}">发标信息</a></li>
+	<li><a href="{:U('Borrow/Ecar')}" class="am-text-warning am-margin-left-lg">车贷E通</a></li>
+	<li><a href="{:U('Borrow/tongji')}" class="am-text-warning am-margin-left-lg">统计</a></li>
+	<li class="am-nav-divider"></li>
+   </ul>
+   <div class="am-alert am-alert-secondary">
+   	<p><span class="am-icon-bookmark"></span> 数据截止</p>
+	<p class="am-text-warning">{$maxScore|date="Y-m-d H:i",###}</p>
+	</div>
+<!--权限管理-->
+<elseif condition="$daohang eq auth " />
+	<ul class="am-nav">
+	<li class="am-active"><a href="{:U('Auth/index')}">用户组</a></li>
+	<li><a href="{:U('Auth/groupAdd')}" class="am-text-warning am-margin-left-lg"><span class="am-icon-plus"></span>添加</a></li>
+	<li class="am-nav-divider"></li>
+	
+   </ul>
+
+<elseif condition="$daohang eq fhk " />
+	<ul class="am-nav">
+	<li <if condition="$Items eq index">class="am-active"</if> ><a href="{:U('Fhk/index')}">合同列表</a></li>
+	<li <if condition="$Items eq clientView">class="am-active"</if> ><a href="{:U('Fhk/clientView')}">客户账款</a></li>
+	<li <if condition="$Items eq DsList">class="am-active"</if> ><a href="{:U('Fhk/DsList')}">待收清单</a></li>
+	<li <if condition="$Items eq YsList">class="am-active"</if> ><a href="{:U('Fhk/YsList')}">应收清单</a></li>
+	<li <if condition="$Items eq AlreadyList">class="am-active"</if> ><a href="{:U('Fhk/AlreadyList')}">已收清单</a></li>
+	<li <if condition="$Items eq TcList	">class="am-active"</if> ><a href="{:U('Fhk/TcList')}">提成统计</a></li>
+	<li <if condition="$Items eq pre">class="am-active"</if> ><a href="{:U('Fhk/pre','','')}">管理审核</a></li>
+	<li class="am-nav-divider"></li>
+	<li><a href="{:U('Fhk/add')}" class="am-text-warning am-margin-left-lg"><span class="am-icon-plus"></span>添加</a></li>
+   </ul>
+<elseif condition="$daohang eq Message" />
+	<ul class="am-nav">
+		<li <if condition="$MessageItems eq Message">class="am-active"</if> ><a href="{:U('User/Message','','')}">信息中心</a></li>
+		<li <if condition="$MessageItems eq MessageSend">class="am-active"</if> ><a href="{:U('User/MessageSend','','')}">发送内信</a></li>
+		<li <if condition="$MessageItems eq getMail">class="am-active"</if> ><a href="{:U('User/getMail','','')}">收件信箱</a></li>
+		<li <if condition="$MessageItems eq postMail">class="am-active"</if> ><a href="{:U('User/postMail','','')}">发件信箱</a></li>
+		<li <if condition="$MessageItems eq Manage">class="am-active"</if> ><a href="{:U('User/Manage','','')}">设置中心</a></li>
+	</ul>
+
+</if>
+
+</div>
+</div>
+</div>
+
+
+

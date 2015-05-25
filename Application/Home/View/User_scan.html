@@ -1,0 +1,53 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<div class="admin-content">
+<ol class="am-breadcrumb">
+        <li><a href="{:U('User/Message')}">信息</a></li>
+        <li class="am-active">列表</li>
+        <li class="am-active">内容</li>
+</ol>
+<article class="am-article">
+  <div class="am-article-hd">
+    <h1 class="am-article-title">{$MessageInfo[0]['title']}</h1>
+    <p class="am-article-meta">
+    发送人：
+        <volist name="UserInfo" id="v">
+            <if condition="$v['id'] eq $MessageInfo[0]['postid']">
+                {$v['xingming']}
+            </if>
+        </volist>
+     &nbsp; &nbsp;时间：{$MessageInfo[0]['posttime']|date="Y-m-d h:i:s",###}&nbsp; &nbsp;
+     收件人：
+        <volist name="UserInfo" id="v">
+            <if condition="$v['id'] eq $MessageInfo[0]['getid']">
+                {$v['xingming']}
+            </if>
+        </volist>
+     &nbsp; &nbsp;接收时间：<if condition="!empty($MessageInfo[0]['gettime'])">{$MessageInfo[0]['gettime']|date="Y-m-d h:i:s",###} <else />未接收</if>
+    </p>
+    
+  </div>
+
+  <div class="am-article-bd">
+    <p class="am-article-lead">
+        {$MessageInfo[0]['content']}
+    </p>
+  </div>
+</article>
+
+
+<article class="am-comment"> <!-- 评论容器 -->
+  <div class="am-comment-main"> <!-- 评论内容容器 -->
+    <header class="am-comment-hd">
+      <!--<h3 class="am-comment-title">评论标题</h3>-->
+      <div class="am-comment-meta"> <!-- 评论元数据 -->
+        <a href="#link-to-user" class="am-comment-author">..</a> <!-- 评论者 -->
+        回复于 <time datetime="">...</time>
+      </div>
+    </header>
+
+    <div class="am-comment-bd">...</div> <!-- 评论内容 -->
+  </div>
+</article>
+</div>
+<include file="./Application/Home/View/footer.html" />

@@ -1,0 +1,34 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+
+<div class="admin-content">
+	<ol class="am-breadcrumb">
+		<li><a href="#">用户组</a></li>
+		<li class="am-active">列表</li>
+	</ol>
+	<table class="am-table am-table-bordered am-table-striped am-text-sm ">
+		<tr class="am-text-warning">
+			<th>用户组名</th>
+			<th>状态</th>
+			<th>描述</th>
+			<th>操作</th>
+		</tr>
+		<volist name="list" id="vo">
+			<tr>
+				<td>{$vo.title}</td>
+				<td><if  condition="$vo.status eq 0 ">禁用
+					<elseif  condition="$vo.status eq 1 "/>正常
+					</if>
+				</td>
+				<td>{$vo.info}</td>
+				<td>
+					<a href="{:U('Auth/groupCk','','')}?sq={$vo.id}">查看/修改权限</a>
+					|<a href="{:U('Auth/accessList','','')}?sq={$vo.id}">成员管理</a>
+				</td>
+			</tr>
+		</volist>
+	</table>
+	<div class="fengye">{$page}</div>
+
+</div>
+<include file="./Application/Home/View/footer.html" />

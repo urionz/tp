@@ -1,0 +1,185 @@
+<include file="./Application/Home/View/header.html" />
+<include file="./Application/Home/View/left.html" />
+<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+	$ajaxUrl="{:U('Fhk/ajaxAction','','')}?id=";
+	$isModify="{$isModify}";
+});
+</script>
+<style type="text/css">
+	table *{
+		font-size: 10px;
+		padding: 0px;
+		text-align: center;
+	}
+</style>
+<div class="admin-content" style="overflow:scroll;">
+	<ol class="am-breadcrumb">
+		<li><a href="{:U('Fhk/index','','')}">合同</a></li>
+		<li>{$lists[0].agree_num}</li>
+		<li class="am-active">收款明细</li>
+	</ol>
+	
+	{$clients[0]['cname']}
+	<table class="am-table am-table-striped am-table-bordered am-text-sm " style="text-align: center;">
+		<tr class="am-success">
+			<th>期数</th>
+			<th>提成金额</th>
+			<th>还款状态</th>
+			<th>距离还款</th>
+			<th>还款详细状态</th>
+			<th>收款编号</th>
+			<th>结算金额</th>
+			<th>实际还本</th>
+			<th>实际还息</th>
+			<th>收款日期</th>
+			<th>坏账本金</th>
+			<th>坏账利息</th>
+			<th>提前去息</th>
+			<th>违约金</th>
+			<th>罚息</th>
+			<th>审核状态</th>
+			<th>操作</th>
+			<th>坏账设置</th>
+		</tr>
+		<volist name="lists" id='vo'>
+		<tr>
+			<td>{$vo.receive_term}</td>
+			<td><if condition="!empty($vo['tc_money'])">{:number_format($vo['tc_money'],2,'.',',')}</if></td>
+			<td>
+				<if condition="!empty($vo['receive_date'])">已收
+					<else />
+					<if condition="time() lt $vo['hk_date']" >待收</if>
+					<if condition="time() gt $vo['hk_date']" >应收</if>
+				</if>
+			</td>
+			<td>
+				<if condition="!empty($vo['receive_date'])">{:floor(($vo[receive_date]-$vo['hk_date'])/(60*60*24))}
+					<elseif condition="empty($vo['receive_date'])"/>{:floor((time()-$vo['hk_date'])/(60*60*24))}
+				</if>天
+			</td>
+			<td>
+				<if condition="!empty($vo['receive_date'])">
+					<if condition="floor((time()-$vo['hk_date'])/(60*60*24)) lt -7">提前还款
+						<elseif condition="(floor((time()-$vo['hk_date'])/(60*60*24)) egt -7) and ((floor((time()-$vo['hk_date'])/(60*60*24)) elt 7))"/>正常收款
+						<elseif condition="floor((time()-$vo['hk_date'])/(60*60*24)) egt 7" />逾期收款
+					</if>
+					<else />
+					<if condition="time() lt $vo['hk_date']">
+						<if condition="floor((time()-$vo['hk_date'])/(60*60*24)) lt -365">一年外到期
+							<elseif condition="(floor((time()-$vo['hk_date'])/(60*60*24)) egt -365) and ((floor((time()-$vo['hk_date'])/(60*60*24)) lt -182))"/>一年内到期
+							<elseif condition="(floor((time()-$vo['hk_date'])/(60*60*24)) egt -182) and ((floor((time()-$vo['hk_date'])/(60*60*24)) lt -91))" />6个月内到期
+							<elseif condition="(floor((time()-$vo['hk_date'])/(60*60*24)) egt -91) and ((floor((time()-$vo['hk_date'])/(60*60*24)) lt -30))" />3个月内到期
+							<elseif condition="(floor((time()-$vo['hk_date'])/(60*60*24)) egt -30) and ((floor((time()-$vo['hk_date'])/(60*60*24)) lt -7))" />一个月内到期
+							<elseif condition="(floor((time()-$vo['hk_date'])/(60*60*24)) egt -7) and ((floor((time()-$vo['hk_date'])/(60*60*24)) lt 0))" />即将到期
+						</if>
+					</if>
+					<if condition="time() gt $vo['hk_date']">
+						<if condition="(floor((time()-$vo['hk_date'])/(60*60*24)) egt 0) and ((floor((time()-$vo['hk_date'])/(60*60*24)) elt 7))">正常
+							<elseif condition="(floor((time()-$vo['hk_date'])/(60*60*24)) gt 7) and ((floor((time()-$vo['hk_date'])/(60*60*24)) elt 30))"/>逾期一个月
+							<elseif condition="(floor((time()-$vo['hk_date'])/(60*60*24)) egt 30) and ((floor((time()-$vo['hk_date'])/(60*60*24)) elt 91))" />逾期3个月
+							<elseif condition="floor((time()-$vo['hk_date'])/(60*60*24)) gt 91" />逾期3个月以上
+						</if>
+					</if>
+				</if>
+			</td>
+			<td>{$vo.receive_num}</td>
+			<td>
+			<if condition="!empty($vo['receive_date'])">
+				<volist name="ReLogInfo" id="v">
+					<if condition="($v['agree_num'] eq $vo['agree_num']) and ($v['receive_term'] eq $vo['receive_term'])">
+						<if condition="!empty($v['result_money'])">{:number_format($v['result_money'],2,'.',',')}</if>
+					</if>
+				</volist>
+				<else />{:number_format($vo['result_money'],2,'.',',')}
+			</if>
+			</td>
+
+			<td>
+			<if condition="!empty($vo['receive_date'])">
+				<volist name="ReLogInfo" id="v">
+					<if condition="($v['agree_num'] eq $vo['agree_num']) and ($v['receive_term'] eq $vo['receive_term'])">
+						<if condition="!empty($v['fac_hb'])">{:number_format($v['fac_hb'],2,'.',',')}</if>
+					</if>
+				</volist>
+				<else />{:number_format($vo['fac_hb'],2,'.',',')}
+			</if>
+			</td>
+
+			<td>
+			<if condition="!empty($vo['receive_date'])">
+				<volist name="ReLogInfo" id="v">
+					<if condition="($v['agree_num'] eq $vo['agree_num']) and ($v['receive_term'] eq $vo['receive_term'])">
+						<if condition="!empty($v['fac_hx'])">{:number_format($v['fac_hx'],2,'.',',')}</if>
+					</if>
+				</volist>
+				<else />{:number_format($vo['fac_hx'],2,'.',',')}
+			</if>
+			</td>
+
+			<td><volist name="ReLogInfo" id="v"><if condition="($v['agree_num'] eq $vo['agree_num']) and ($v['receive_term'] eq $vo['receive_term'])"><if condition="!empty($v['receive_date'])">{$v.receive_date|date='Y-m-d',###}</if></if></volist></td>
+
+			<td><volist name="ReLogInfo" id="v"><if condition="($v['agree_num'] eq $vo['agree_num']) and ($v['receive_term'] eq $vo['receive_term'])"><if condition="!empty($v['hz_bj'])">{:number_format($v['hz_bj'],2,'.',',')}</if></if></volist></td>
+
+			<td><volist name="ReLogInfo" id="v"><if condition="($v['agree_num'] eq $vo['agree_num']) and ($v['receive_term'] eq $vo['receive_term'])"><if condition="!empty($v['hzlx'])">{:number_format($v['hzlx'],2,'.',',')}</if></if></volist></td>
+
+			<td>
+				<volist name="ReLogInfo" id="v">
+					<if condition="($v['agree_num'] eq $vo['agree_num']) and ($v['receive_term'] eq $vo['receive_term'])">
+						<if condition="!empty($v['tqhkqx'])">{:number_format($v['tqhkqx'],2,'.',',')}</if>
+					</if>
+				</volist>
+			</td>
+
+			<td>
+				<volist name="ReLogInfo" id="v">
+					<if condition="($v['agree_num'] eq $vo['agree_num']) and ($v['receive_term'] eq $vo['receive_term'])">
+						<if condition="!empty($v['wyj'])">{:number_format($v['wyj'],2,'.',',')}</if>
+					</if>
+				</volist>
+			</td>
+
+			<td>
+				<if condition="!empty($vo['receive_date'])">
+					<volist name="ReLogInfo" id="v">
+						<if condition="($v['agree_num'] eq $vo['agree_num']) and ($v['receive_term'] eq $vo['receive_term'])">
+								<if condition="!empty($v['fx'])">{:number_format($v['fx'],2,'.',',')}</if>
+						</if>
+					</volist>
+				<else />
+					<if condition="time() gt $vo['hk_date']">
+						<if condition="floor((time()-$vo['hk_date'])/(60*60*24)) elt 15">
+							{:number_format($vo['result_money']*0.04*floor((time()-$vo['hk_date'])/(60*60*24)),2,'.',',')}
+						<elseif condition="floor((time()-$svo['hk_date'])/(60*60*24)) gt 15" />
+							{:number_format($vo['result_money']*0.05*floor((time()-$vo['hk_date'])/(60*60*24)),2,'.',',')}
+						</if>
+					</if>
+				</if>
+				
+			</td>
+			<td><if condition="$vo['pre_status'] eq 1">待审核
+				<elseif condition="$vo['pre_status'] eq 2" />通过
+				<elseif condition="$vo['pre_status'] eq 3" />未通过
+			</if></td>
+			<td>
+				<if condition="$vo['status'] eq 0">
+					<if condition="empty($vo['pre_status']) OR ($vo['pre_status'] eq 3)">
+					<button title="设置" class="modify am-sm-btn am-btn-default">设置</button><button title="保存" class="save am-sm-btn am-btn-default" style="display:none;">保存</button>
+					</if>
+				</if>
+			</td>
+
+			<td>
+			<if condition="$vo['status'] eq 0">
+				<if condition="empty($vo['pre_status']) OR ($vo['pre_status'] eq 3)">
+				<button class="hzset am-sm-btn am-btn-default" title="坏账设置">设置</button>
+				<button class="hzsave am-sm-btn am-btn-default" title="保存" style="display:none;">保存</button>
+				</if>
+			</if>
+			</td>
+		</tr>
+		</volist>
+	</table>
+</div>
+<include file="./Application/Home/View/footer.html" />
